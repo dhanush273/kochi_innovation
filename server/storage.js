@@ -112,6 +112,12 @@ export const defaultEventData = {
       name: "Satish Varadharaj",
       designation: "Team Lead - Enterprise Products",
       photoUrl: "/people/satish-varadharaj.jpg"
+    },
+    {
+      id: "sp-6",
+      name: "A D Kumar",
+      designation: "Territory Technical Manager, Dassault Systèmes",
+      photoUrl: "/people/a-d-kumar.png"
     }
   ],
   venue: {

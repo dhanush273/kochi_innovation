@@ -192,14 +192,99 @@ export default function PartnersFooter({ partners, branding }) {
               <span className="text-blue-300/40">•</span>
               <span className="hover:text-white cursor-pointer transition-colors">Terms of Registration</span>
               <span className="text-blue-300/40">•</span>
-              
-             
-              
-
+              {/* Contact Event Support Button (Opens modal on click) */}
+              <button
+                type="button"
+                onClick={() => setShowSupport(true)}
+                className="hover:text-white cursor-pointer transition-colors focus:outline-none"
+              >
+                Contact Support
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Contact Support Modal (Only visible when clicked) */}
+      {showSupport && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
+          onClick={() => setShowSupport(false)}
+        >
+          <div 
+            className="relative w-full max-w-sm sm:max-w-md bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 text-slate-800"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-brand-red"></span>
+                <h3 className="font-extrabold text-base text-slate-900">
+                  Contact Support
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSupport(false)}
+                className="w-8 h-8 rounded-full flex items-center justify-center text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-500 mt-2.5 mb-4">
+              Have questions regarding registration, agenda, or venue? Reach out to our event support team:
+            </p>
+
+            {/* Contact Channels */}
+            <div className="space-y-3">
+              {/* Phone */}
+              <a
+                href="tel:+919590506408"
+                className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-50 hover:bg-red-50/70 border border-slate-100 hover:border-red-200 transition-all group"
+              >
+                <div className="w-10 h-10 rounded-full bg-red-100 text-[#bb221a] flex items-center justify-center flex-shrink-0 group-hover:bg-[#bb221a] group-hover:text-white transition-colors">
+                  <Phone className="w-4 h-4 fill-current" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-[#bb221a] transition-colors">
+                    Call Support
+                  </span>
+                  <span className="text-sm font-bold text-slate-900 group-hover:text-[#bb221a] transition-colors">
+                    +91 9590 506 408
+                  </span>
+                </div>
+              </a>
+
+              {/* Email */}
+              <a
+                href="mailto:marketing@ckonnect.in"
+                className="flex items-center gap-3.5 p-3 rounded-xl bg-slate-50 hover:bg-red-50/70 border border-slate-100 hover:border-red-200 transition-all group"
+              >
+                <div className="w-10 h-10 rounded-full bg-red-100 text-[#bb221a] flex items-center justify-center flex-shrink-0 group-hover:bg-[#bb221a] group-hover:text-white transition-colors">
+                  <Mail className="w-4 h-4" />
+                </div>
+                <div className="flex flex-col text-left min-w-0">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 group-hover:text-[#bb221a] transition-colors">
+                    Email Support
+                  </span>
+                  <span className="text-sm font-bold text-slate-900 group-hover:text-[#bb221a] transition-colors truncate">
+                    marketing@ckonnect.in
+                  </span>
+                </div>
+              </a>
+            </div>
+
+            {/* Footer note */}
+            <div className="mt-5 pt-3 border-t border-slate-100 text-center">
+              <span className="text-[11px] text-slate-400">
+                {branding?.companyName || 'Conceptia KONNECT'} • Authorized SOLIDWORKS Reseller
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </footer>
   );
 }

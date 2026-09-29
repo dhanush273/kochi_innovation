@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 
 /**
  * Canvas-based generator for the official 1080x1080 SOLIDWORKS Innovation Day 2026 creative.
- * Replicates the exact visual structure from the reference design.
+ * Uses official Dassault 3DS typography, enlarged logos, and no oval container.
  */
 export default function CreativeCanvas({ attendee, onRenderComplete }) {
   const canvasRef = useRef(null);
@@ -26,14 +26,17 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // Ensure fonts are loaded
-      if (document.fonts) {
+      // 1. Ensure 3DS Fonts are loaded into the document and canvas context
+      if (typeof FontFace !== 'undefined') {
         try {
-          await document.fonts.load('800 48px "Montserrat"');
-          await document.fonts.load('800 70px "Montserrat"');
-          await document.fonts.load('700 24px "Inter"');
+          const fBold = new FontFace('3DS', 'url("/3DS Fonts/3DS BOLD.OTF")', { weight: '800' });
+          const fSemi = new FontFace('3DS', 'url("/3DS Fonts/3DS SEMIBOLD.OTF")', { weight: '600' });
+          const fReg = new FontFace('3DS', 'url("/3DS Fonts/3DS REGULAR.OTF")', { weight: '400' });
+          const loaded = await Promise.all([fBold.load(), fSemi.load(), fReg.load()]);
+          loaded.forEach(font => document.fonts.add(font));
+          await document.fonts.ready;
         } catch (e) {
-          console.warn('Font load error:', e);
+          console.warn('3DS Font Face loading notice:', e);
         }
       }
 
@@ -163,110 +166,71 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       ctx.stroke();
       ctx.restore();
 
-      // 3. TOP BRANDING BAR
-      // Conceptia Konnect Logo (Left)
+      // 3. TOP BRANDING BAR (Enlarged Logo Sizes & No Oval around SOLIDWORKS)
+      // Conceptia Konnect Logo (Left) - Bigger
       if (ckLogo) {
         const logoAspect = ckLogo.width / ckLogo.height;
-        const targetH = 50;
+        const targetH = 66;
         const targetW = targetH * logoAspect;
-        ctx.drawImage(ckLogo, 70, 52, Math.min(targetW, 260), targetH);
+        ctx.drawImage(ckLogo, 68, 44, Math.min(targetW, 360), targetH);
       } else {
-        // Fallback text
         ctx.fillStyle = '#0f172a';
-        ctx.font = '800 24px "Montserrat", sans-serif';
-        ctx.fillText('Conceptia KONNECT', 70, 85);
+        ctx.font = '800 28px "3DS", sans-serif';
+        ctx.fillText('Conceptia KONNECT', 68, 88);
       }
 
-      // DS SOLIDWORKS Pill (Right)
-      const swPillX = 720;
-      const swPillY = 50;
-      const swPillW = 285;
-      const swPillH = 68;
-      const swPillR = 34;
-
-      // Draw rounded white pill with soft shadow
-      ctx.save();
-      ctx.shadowColor = 'rgba(15, 23, 42, 0.08)';
-      ctx.shadowBlur = 16;
-      ctx.shadowOffsetY = 4;
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.roundRect(swPillX, swPillY, swPillW, swPillH, swPillR);
-      ctx.fill();
-      ctx.restore();
-
-      // Pill border
-      ctx.strokeStyle = '#f1f5f9';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.roundRect(swPillX, swPillY, swPillW, swPillH, swPillR);
-      ctx.stroke();
-
+      // 3DS SOLIDWORKS Logo (Right) - Bigger, drawn directly on canvas without oval container
       if (swLogo) {
         const swAspect = swLogo.width / swLogo.height;
-        const targetH = 34;
+        const targetH = 62;
         const targetW = targetH * swAspect;
-        const swImgX = swPillX + (swPillW - targetW) / 2;
-        const swImgY = swPillY + (swPillH - targetH) / 2;
+        const swImgX = 1012 - targetW;
+        const swImgY = 46;
         ctx.drawImage(swLogo, swImgX, swImgY, targetW, targetH);
       } else {
         ctx.fillStyle = '#e11d48';
-        ctx.font = '800 22px "Montserrat", sans-serif';
-        ctx.fillText('3DS SOLIDWORKS', swPillX + 35, swPillY + 42);
+        ctx.font = '800 28px "3DS", sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText('3DS SOLIDWORKS', 1012, 88);
+        ctx.textAlign = 'left';
       }
 
-      // 4. MAIN HEADLINE SECTION
+      // 4. MAIN HEADLINE SECTION (Without "2026 EDITION")
       // Red Horizontal Accent Bar
       ctx.fillStyle = '#e11d48';
-      ctx.fillRect(68, 175, 36, 5);
+      ctx.fillRect(68, 168, 38, 5);
 
-      // "— I'M AT" text
+      // "— I'M AT" text in 3DS font
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 26px "Montserrat", sans-serif';
-      ctx.fillText("I'M AT", 115, 183);
-
-      // "2026 EDITION" Pill Badge
-      const badgeX = 230;
-      const badgeY = 162;
-      const badgeW = 145;
-      const badgeH = 32;
-      ctx.save();
-      ctx.fillStyle = '#e11d48';
-      ctx.beginPath();
-      ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 16);
-      ctx.fill();
-      ctx.fillStyle = '#ffffff';
-      ctx.font = '800 13px "Inter", sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText('2026 EDITION', badgeX + badgeW / 2, badgeY + 21);
-      ctx.restore();
+      ctx.font = '800 28px "3DS", sans-serif';
+      ctx.fillText("I'M AT", 120, 175);
 
       // Headline Line 1: SOLIDWORKS
       ctx.fillStyle = '#0a192f';
-      ctx.font = '900 68px "Montserrat", sans-serif';
-      ctx.fillText('SOLIDWORKS', 68, 260);
+      ctx.font = '800 74px "3DS", sans-serif';
+      ctx.fillText('SOLIDWORKS', 68, 256);
 
-      // Headline Line 2: INNOVATION DAY (with gradient or vibrant red/orange)
+      // Headline Line 2: INNOVATION DAY (with vibrant red-orange gradient)
       const textGrad = ctx.createLinearGradient(68, 290, 700, 330);
       textGrad.addColorStop(0, '#e11d48');
       textGrad.addColorStop(1, '#ea580c');
       ctx.fillStyle = textGrad;
-      ctx.font = '900 68px "Montserrat", sans-serif';
-      ctx.fillText('INNOVATION DAY', 68, 335);
+      ctx.font = '800 74px "3DS", sans-serif';
+      ctx.fillText('INNOVATION DAY', 68, 334);
 
       // Headline Line 3: "2026" in Electric Blue + "Hosted by Conceptia Konnect"
       ctx.fillStyle = '#2563eb';
-      ctx.font = '900 76px "Montserrat", sans-serif';
+      ctx.font = '800 80px "3DS", sans-serif';
       ctx.fillText('2026', 68, 418);
 
       // "Hosted by" & "Conceptia Konnect" beside 2026
       ctx.fillStyle = '#64748b';
-      ctx.font = '600 19px "Inter", sans-serif';
-      ctx.fillText('Hosted by', 285, 386);
+      ctx.font = '600 20px "3DS", sans-serif';
+      ctx.fillText('Hosted by', 290, 386);
 
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 26px "Montserrat", sans-serif';
-      ctx.fillText('Conceptia Konnect', 285, 417);
+      ctx.font = '800 28px "3DS", sans-serif';
+      ctx.fillText('Conceptia Konnect', 290, 418);
 
       // 5. ATTENDEE PHOTO & DETAILS SECTION
       const photoX = 68;
@@ -332,7 +296,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
         ctx.fillStyle = '#e2e8f0';
         ctx.fillRect(photoX, photoY, photoSize, photoSize);
         ctx.fillStyle = '#64748b';
-        ctx.font = '700 24px "Inter", sans-serif';
+        ctx.font = '700 24px "3DS", sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('Attendee Photo', photoX + photoSize / 2, photoY + photoSize / 2);
       }
@@ -345,15 +309,15 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       ctx.fillStyle = '#ea580c';
       ctx.fillRect(detailX, 510, 50, 5);
 
-      // Name (dynamic font scaling)
+      // Name (3DS font with dynamic sizing)
       ctx.fillStyle = '#0f172a';
-      let nameFontSize = 46;
+      let nameFontSize = 48;
       if (fullName.length > 20) {
-        nameFontSize = 34;
+        nameFontSize = 36;
       } else if (fullName.length > 15) {
-        nameFontSize = 38;
+        nameFontSize = 40;
       }
-      ctx.font = `800 ${nameFontSize}px "Montserrat", sans-serif`;
+      ctx.font = `800 ${nameFontSize}px "3DS", sans-serif`;
       ctx.fillText(fullName, detailX, 565);
 
       // Designation
@@ -362,7 +326,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       if (designation.length > 28) {
         desigFontSize = 21;
       }
-      ctx.font = `600 ${desigFontSize}px "Inter", sans-serif`;
+      ctx.font = `600 ${desigFontSize}px "3DS", sans-serif`;
       ctx.fillText(designation, detailX, 612);
 
       // Company
@@ -371,18 +335,18 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       if (companyName.length > 25) {
         compFontSize = 22;
       }
-      ctx.font = `800 ${compFontSize}px "Montserrat", sans-serif`;
+      ctx.font = `800 ${compFontSize}px "3DS", sans-serif`;
       ctx.fillText(companyName, detailX, 655);
 
       // Sub-Block: A DAY OF INNOVATION • INSIGHTS • CONNECTIONS
       const blockY = 720;
       ctx.fillStyle = '#64748b';
-      ctx.font = '800 13px "Inter", sans-serif';
+      ctx.font = '800 13px "3DS", sans-serif';
       ctx.letterSpacing = '2px';
       ctx.fillText('A DAY OF', detailX, blockY);
 
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 20px "Montserrat", sans-serif';
+      ctx.font = '800 21px "3DS", sans-serif';
       ctx.fillText('INNOVATION  •  INSIGHTS  •  CONNECTIONS', detailX, blockY + 28);
 
       // Underline below title
@@ -391,7 +355,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
 
       // Supporting tagline lines
       ctx.fillStyle = '#64748b';
-      ctx.font = '500 17px "Inter", sans-serif';
+      ctx.font = '500 17px "3DS", sans-serif';
       ctx.fillText('Exploring new possibilities in design, engineering and', detailX, blockY + 66);
       ctx.fillText('product development.', detailX, blockY + 92);
 
@@ -406,12 +370,12 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
 
       // Left: Hosted by Conceptia Konnect
       ctx.fillStyle = '#475569';
-      ctx.font = '600 21px "Inter", sans-serif';
+      ctx.font = '600 22px "3DS", sans-serif';
       ctx.fillText('Hosted by Conceptia Konnect', 68, 1038);
 
       // Right: #InnovationDay2026
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 23px "Montserrat", sans-serif';
+      ctx.font = '800 24px "3DS", sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText('#InnovationDay2026', 1012, 1038);
       ctx.textAlign = 'left'; // reset

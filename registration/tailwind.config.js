@@ -24,7 +24,9 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        sans: ['3DS', 'Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        '3ds': ['3DS', 'sans-serif'],
+        '3ds-condensed': ['3DS Condensed', '3DS', 'sans-serif']
       }
     },
   },

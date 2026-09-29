@@ -5,12 +5,12 @@ export default function Header({ onOpenQrModal }) {
   return (
     <header className="w-full max-w-xl mx-auto mb-6">
       {/* Logos Bar */}
-      <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between gap-4">
+      <div className="bg-white/95 backdrop-blur-md rounded-2xl px-5 py-4 shadow-sm border border-slate-100 flex items-center justify-between gap-4">
         <div className="flex items-center">
           <img
             src="/Logos/conceptia-konnect-logo.png"
             alt="Conceptia Konnect"
-            className="h-8 md:h-9 object-contain"
+            className="h-10 sm:h-12 object-contain"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = '/uploads/conceptia-konnect-logo.png';
@@ -22,7 +22,7 @@ export default function Header({ onOpenQrModal }) {
           <img
             src="/Logos/solidworks-logo.png"
             alt="SOLIDWORKS"
-            className="h-7 md:h-8 object-contain"
+            className="h-8 sm:h-10 object-contain"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = '/uploads/solidworks-logo.png';

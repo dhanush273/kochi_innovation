@@ -256,67 +256,80 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       const photoX = 68;
       const photoY = 485;
       const photoSize = 390;
-      const cornerR = 34;
+      const cornerR = 36;
 
-      // Layer 1: Vibrant Electric Blue Card (peeking top-left)
+      // Layer 1: Electric Blue Card tilted counter-clockwise (-12 degrees) peeking out at top-left
       ctx.save();
-      ctx.fillStyle = '#2563eb';
+      ctx.translate(photoX + 50, photoY + 55);
+      ctx.rotate((-12 * Math.PI) / 180);
+      ctx.fillStyle = '#1d63ff'; // Electric royal blue matching reference
       ctx.beginPath();
-      ctx.roundRect(photoX - 24, photoY - 22, 230, 230, 38);
+      ctx.roundRect(-90, -85, 240, 240, 42);
       ctx.fill();
       ctx.restore();
 
-      // Layer 2: Vibrant Warm Orange Card (peeking bottom-right)
+      // Layer 2: Vibrant Warm Orange Card peeking out at bottom-right
       ctx.save();
-      ctx.fillStyle = '#ea580c';
+      const orangeGrad = ctx.createLinearGradient(photoX + 38, photoY + 38, photoX + photoSize + 38, photoY + photoSize + 38);
+      orangeGrad.addColorStop(0, '#f97316');
+      orangeGrad.addColorStop(1, '#ea580c');
+      ctx.fillStyle = orangeGrad;
       ctx.beginPath();
-      ctx.roundRect(photoX + 42, photoY + 45, photoSize, photoSize, 44);
+      ctx.roundRect(photoX + 38, photoY + 38, photoSize, photoSize, 42);
       ctx.fill();
+
+      // Subtle horizontal accent line extending from orange card towards right
+      ctx.strokeStyle = 'rgba(234, 88, 12, 0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(photoX + photoSize + 38, photoY + photoSize * 0.72);
+      ctx.lineTo(photoX + photoSize + 115, photoY + photoSize * 0.72);
+      ctx.stroke();
       ctx.restore();
 
-      // Layer 3: Main Photo Card with soft shadow & crisp white border
+      // Layer 3: Main Photo Card with soft drop shadow
       ctx.save();
-      ctx.shadowColor = 'rgba(15, 23, 42, 0.16)';
-      ctx.shadowBlur = 24;
-      ctx.shadowOffsetY = 8;
+      ctx.shadowColor = 'rgba(15, 23, 42, 0.18)';
+      ctx.shadowBlur = 28;
+      ctx.shadowOffsetY = 10;
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
       ctx.roundRect(photoX, photoY, photoSize, photoSize, cornerR);
       ctx.fill();
       ctx.restore();
 
-      // Border stroke
+      // Crisp White Border (12px)
       ctx.save();
       ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 10;
+      ctx.lineWidth = 12;
       ctx.beginPath();
       ctx.roundRect(photoX, photoY, photoSize, photoSize, cornerR);
       ctx.stroke();
       ctx.restore();
 
-      // Clip attendee photo inside rounded rect
+      // Clip attendee photo inside rounded rect with matching inner radius
       ctx.save();
       ctx.beginPath();
-      ctx.roundRect(photoX + 5, photoY + 5, photoSize - 10, photoSize - 10, cornerR - 3);
+      ctx.roundRect(photoX + 6, photoY + 6, photoSize - 12, photoSize - 12, cornerR - 4);
       ctx.clip();
 
       if (attendeePhoto) {
         // Draw photo centered with aspect-fill cover
         const imgW = attendeePhoto.width;
         const imgH = attendeePhoto.height;
-        const boxSize = photoSize - 10;
+        const boxSize = photoSize - 12;
         const scale = Math.max(boxSize / imgW, boxSize / imgH);
         const drawW = imgW * scale;
         const drawH = imgH * scale;
-        const drawX = (photoX + 5) + (boxSize - drawW) / 2;
-        const drawY = (photoY + 5) + (boxSize - drawH) / 2;
+        const drawX = (photoX + 6) + (boxSize - drawW) / 2;
+        const drawY = (photoY + 6) + (boxSize - drawH) / 2;
         ctx.drawImage(attendeePhoto, drawX, drawY, drawW, drawH);
       } else {
         // Fallback placeholder
         ctx.fillStyle = '#e2e8f0';
         ctx.fillRect(photoX, photoY, photoSize, photoSize);
         ctx.fillStyle = '#64748b';
-        ctx.font = '700 24px "3DS", sans-serif';
+        ctx.font = '700 24px ThreeDS, "3DS", sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('Attendee Photo', photoX + photoSize / 2, photoY + photoSize / 2);
       }
@@ -325,29 +338,31 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       // 6. ATTENDEE DETAILS SECTION (Right of Photo)
       const detailX = 525;
 
-      // Orange horizontal accent line
+      // Orange horizontal accent pill
       ctx.fillStyle = '#ea580c';
-      ctx.fillRect(detailX, 510, 50, 5);
+      ctx.beginPath();
+      ctx.roundRect(detailX, 508, 48, 5, 2.5);
+      ctx.fill();
 
       // Name (3DS font with dynamic sizing)
       ctx.fillStyle = '#0f172a';
-      let nameFontSize = 48;
+      let nameFontSize = 52;
       if (fullName.length > 20) {
-        nameFontSize = 36;
+        nameFontSize = 38;
       } else if (fullName.length > 15) {
-        nameFontSize = 40;
+        nameFontSize = 44;
       }
       ctx.font = `800 ${nameFontSize}px ThreeDS, "3DS", sans-serif`;
-      ctx.fillText(fullName, detailX, 565);
+      ctx.fillText(fullName, detailX, 568);
 
       // Designation
       ctx.fillStyle = '#475569';
-      let desigFontSize = 26;
+      let desigFontSize = 28;
       if (designation.length > 28) {
-        desigFontSize = 21;
+        desigFontSize = 22;
       }
       ctx.font = `600 ${desigFontSize}px ThreeDS, "3DS", sans-serif`;
-      ctx.fillText(designation, detailX, 612);
+      ctx.fillText(designation, detailX, 616);
 
       // Company
       ctx.fillStyle = '#ea580c';
@@ -356,28 +371,64 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
         compFontSize = 22;
       }
       ctx.font = `800 ${compFontSize}px ThreeDS, "3DS", sans-serif`;
-      ctx.fillText(companyName, detailX, 655);
+      ctx.fillText(companyName, detailX, 658);
 
       // Sub-Block: A DAY OF INNOVATION • INSIGHTS • CONNECTIONS
-      const blockY = 720;
+      const blockY = 724;
       ctx.fillStyle = '#64748b';
       ctx.font = '800 13px ThreeDS, "3DS", sans-serif';
-      ctx.letterSpacing = '2px';
+      ctx.letterSpacing = '2.5px';
       ctx.fillText('A DAY OF', detailX, blockY);
 
-      ctx.fillStyle = '#0f172a';
-      ctx.font = '800 21px ThreeDS, "3DS", sans-serif';
-      ctx.fillText('INNOVATION  •  INSIGHTS  •  CONNECTIONS', detailX, blockY + 28);
+      // Reset letterSpacing for the three words and dots
+      ctx.letterSpacing = '0px';
+      const titleY = blockY + 28;
+      const underlineY = titleY + 8;
+      const underlineHeight = 3.5;
 
-      // Underline below title
+      ctx.font = '800 21px ThreeDS, "3DS", sans-serif';
+
+      // 1. INNOVATION (with Red/Coral Underline)
+      let curX = detailX;
       ctx.fillStyle = '#0f172a';
-      ctx.fillRect(detailX, blockY + 36, 420, 2);
+      ctx.fillText('INNOVATION', curX, titleY);
+      const wInnovation = ctx.measureText('INNOVATION').width;
+      ctx.fillStyle = '#e11d48';
+      ctx.fillRect(curX, underlineY, wInnovation, underlineHeight);
+      curX += wInnovation + 9;
+
+      // Orange dot bullet
+      ctx.fillStyle = '#ea580c';
+      ctx.fillText('•', curX, titleY);
+      const wDot1 = ctx.measureText('•').width;
+      curX += wDot1 + 9;
+
+      // 2. INSIGHTS (with Navy Underline)
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText('INSIGHTS', curX, titleY);
+      const wInsights = ctx.measureText('INSIGHTS').width;
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(curX, underlineY, wInsights, underlineHeight);
+      curX += wInsights + 9;
+
+      // Blue dot bullet
+      ctx.fillStyle = '#2563eb';
+      ctx.fillText('•', curX, titleY);
+      const wDot2 = ctx.measureText('•').width;
+      curX += wDot2 + 9;
+
+      // 3. CONNECTIONS (with Electric Blue Underline)
+      ctx.fillStyle = '#0f172a';
+      ctx.fillText('CONNECTIONS', curX, titleY);
+      const wConnections = ctx.measureText('CONNECTIONS').width;
+      ctx.fillStyle = '#2563eb';
+      ctx.fillRect(curX, underlineY, wConnections, underlineHeight);
 
       // Supporting tagline lines
       ctx.fillStyle = '#64748b';
       ctx.font = '500 17px ThreeDS, "3DS", sans-serif';
-      ctx.fillText('Exploring new possibilities in design, engineering and', detailX, blockY + 66);
-      ctx.fillText('product development.', detailX, blockY + 92);
+      ctx.fillText('Exploring new possibilities in design, engineering and', detailX, blockY + 68);
+      ctx.fillText('product development.', detailX, blockY + 94);
 
       // 7. BOTTOM FOOTER BAR
       // Divider line

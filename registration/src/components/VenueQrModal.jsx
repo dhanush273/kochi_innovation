@@ -9,8 +9,7 @@ export default function VenueQrModal({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   // Dedicated to live network URL
-  const liveUrl = import.meta.env.VITE_PUBLIC_URL ||
-    (typeof window !== 'undefined' ? window.location.origin + window.location.pathname.replace(/\/+$/, '') : '');
+  const liveUrl = import.meta.env.VITE_PUBLIC_URL || 'https://innovation-event-wwr5.vercel.app/';
 
   const handleCopyLink = async () => {
     try {

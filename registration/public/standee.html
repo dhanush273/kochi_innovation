@@ -226,7 +226,7 @@
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
-    const targetUrl = urlParams.get('url') || window.location.origin;
+    const targetUrl = urlParams.get('url') || 'https://innovation-event-wwr5.vercel.app/';
 
     new QRCode(document.getElementById('qrcode'), {
       text: targetUrl,

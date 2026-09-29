@@ -166,27 +166,36 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       ctx.stroke();
       ctx.restore();
 
-      // 3. TOP BRANDING BAR (Enlarged Logo Sizes & White DS SOLIDWORKS Logo)
-      // Conceptia Konnect Logo (Left) - Substantially Enlarged
+      // 3. TOP BRANDING BAR (Substantially Increased Logo Sizes - Tightly Trimmed)
+      // Conceptia Konnect Logo (Left)
       if (ckLogo) {
-        const logoAspect = ckLogo.width / ckLogo.height;
-        const targetH = 82;
-        const targetW = targetH * logoAspect;
-        ctx.drawImage(ckLogo, 65, 38, Math.min(targetW, 420), targetH);
+        // Source crop to remove transparent padding if full-res asset (11622x3600)
+        const sx = ckLogo.width > 5000 ? 436 : 0;
+        const sy = ckLogo.width > 5000 ? 998 : 0;
+        const sw = ckLogo.width > 5000 ? 11122 : ckLogo.width;
+        const sh = ckLogo.width > 5000 ? 1698 : ckLogo.height;
+        const aspect = sw / sh;
+        const targetH = 68;
+        const targetW = targetH * aspect;
+        ctx.drawImage(ckLogo, sx, sy, sw, sh, 65, 46, Math.min(targetW, 460), targetH);
       } else {
         ctx.fillStyle = '#0f172a';
         ctx.font = '800 32px "3DS", sans-serif';
         ctx.fillText('Conceptia KONNECT', 65, 88);
       }
 
-      // White 3DS SOLIDWORKS Logo (Right) - Substantially Enlarged, High Contrast on Orange Gradient
+      // White 3DS SOLIDWORKS Logo (Right)
       if (swLogo) {
-        const swAspect = swLogo.width / swLogo.height;
-        const targetH = 76;
-        const targetW = targetH * swAspect;
+        // Source crop to remove transparent padding if full-res asset (3317x1671)
+        const sx = swLogo.width > 2000 ? 233 : 0;
+        const sy = swLogo.width > 2000 ? 543 : 0;
+        const sw = swLogo.width > 2000 ? 2850 : swLogo.width;
+        const sh = swLogo.width > 2000 ? 588 : swLogo.height;
+        const aspect = sw / sh;
+        const targetH = 64;
+        const targetW = targetH * aspect;
         const swImgX = 1015 - targetW;
-        const swImgY = 40;
-        ctx.drawImage(swLogo, swImgX, swImgY, targetW, targetH);
+        ctx.drawImage(swLogo, sx, sy, sw, sh, swImgX, 48, targetW, targetH);
       } else {
         ctx.fillStyle = '#ffffff';
         ctx.font = '800 32px "3DS", sans-serif';
@@ -198,39 +207,39 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       // 4. MAIN HEADLINE SECTION (Without "2026 EDITION")
       // Red Horizontal Accent Bar
       ctx.fillStyle = '#e11d48';
-      ctx.fillRect(65, 178, 42, 6);
+      ctx.fillRect(65, 172, 42, 6);
 
       // "— I'M AT" text in 3DS font
       ctx.fillStyle = '#0f172a';
       ctx.font = '800 30px "3DS", sans-serif';
-      ctx.fillText("I'M AT", 122, 186);
+      ctx.fillText("I'M AT", 122, 180);
 
       // Headline Line 1: SOLIDWORKS
       ctx.fillStyle = '#0a192f';
       ctx.font = '800 78px "3DS", sans-serif';
-      ctx.fillText('SOLIDWORKS', 65, 272);
+      ctx.fillText('SOLIDWORKS', 65, 266);
 
       // Headline Line 2: INNOVATION DAY (with vibrant red-orange gradient)
-      const textGrad = ctx.createLinearGradient(65, 305, 750, 350);
+      const textGrad = ctx.createLinearGradient(65, 300, 750, 345);
       textGrad.addColorStop(0, '#e11d48');
       textGrad.addColorStop(1, '#ea580c');
       ctx.fillStyle = textGrad;
       ctx.font = '800 78px "3DS", sans-serif';
-      ctx.fillText('INNOVATION DAY', 65, 354);
+      ctx.fillText('INNOVATION DAY', 65, 346);
 
       // Headline Line 3: "2026" in Electric Blue + "Hosted by Conceptia Konnect"
       ctx.fillStyle = '#2563eb';
       ctx.font = '800 84px "3DS", sans-serif';
-      ctx.fillText('2026', 65, 442);
+      ctx.fillText('2026', 65, 432);
 
       // "Hosted by" & "Conceptia Konnect" beside 2026
       ctx.fillStyle = '#64748b';
       ctx.font = '600 22px "3DS", sans-serif';
-      ctx.fillText('Hosted by', 295, 410);
+      ctx.fillText('Hosted by', 295, 400);
 
       ctx.fillStyle = '#0f172a';
       ctx.font = '800 30px "3DS", sans-serif';
-      ctx.fillText('Conceptia Konnect', 295, 442);
+      ctx.fillText('Conceptia Konnect', 295, 432);
 
       // 5. ATTENDEE PHOTO & DETAILS SECTION
       const photoX = 68;

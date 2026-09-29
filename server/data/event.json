@@ -76,33 +76,33 @@
     },
     {
       "id": "sp-2",
+      "name": "A D Kumar",
+      "designation": "Territory Technical Manager, Dassault Systèmes",
+      "photoUrl": "/people/a-d-kumar.png"
+    },
+    {
+      "id": "sp-3",
       "name": "Ramesh Aravind",
       "designation": "Customer Success Specialist",
       "photoUrl": "/people/ramesh-aravind.jpg"
     },
     {
-      "id": "sp-3",
+      "id": "sp-4",
       "name": "Mohamed Riswan M",
       "designation": "Solution Associate",
       "photoUrl": "/people/mohamed-riswan-m.png"
     },
     {
-      "id": "sp-4",
+      "id": "sp-5",
       "name": "Mahendra H",
       "designation": "Product Manager, Simulation Solutions",
       "photoUrl": "/people/mahendra-h.jpg"
     },
     {
-      "id": "sp-5",
+      "id": "sp-6",
       "name": "Satish Varadharaj",
       "designation": "Team Lead - Enterprise Products",
       "photoUrl": "/people/satish-varadharaj.jpg"
-    },
-    {
-      "id": "sp-6",
-      "name": "A D Kumar",
-      "designation": "Territory Technical Manager, Dassault Systèmes",
-      "photoUrl": "/people/a-d-kumar.png"
     }
   ],
   "venue": {

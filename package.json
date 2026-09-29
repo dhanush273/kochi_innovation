@@ -9,7 +9,9 @@
     "server:dev": "npm --prefix server run dev",
     "client": "npm --prefix client run dev",
     "admin": "npm --prefix admin run dev",
-    "build:all": "npm --prefix client run build && npm --prefix admin run build"
+    "registration": "npm --prefix registration run dev",
+    "registration:build": "npm --prefix registration run build",
+    "build:all": "npm --prefix client run build && npm --prefix admin run build && npm --prefix registration run build"
   },
   "keywords": ["mern", "react", "solidworks", "admin", "client"],
   "license": "ISC"

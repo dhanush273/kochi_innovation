@@ -8,6 +8,7 @@ import { connectDB } from './db.js';
 import eventRoutes from './routes/eventRoutes.js';
 import registrationRoutes from './routes/registrationRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import attendeePostRoutes from './routes/attendeePostRoutes.js';
 import { dataService } from './services/dataService.js';
 
 dotenv.config();
@@ -55,6 +56,16 @@ app.use('/uploads', express.static(path.join(publicDir, 'uploads'), staticOption
 app.use('/api/event', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/social-posts', attendeePostRoutes);
+
+// Serve built registration app if registration/dist exists
+const registrationDist = path.join(__dirname, '../registration/dist');
+if (fs.existsSync(registrationDist)) {
+  app.use('/registration', express.static(registrationDist));
+  app.get('/registration/*', (req, res) => {
+    res.sendFile(path.join(registrationDist, 'index.html'));
+  });
+}
 
 // Serve built frontend if client/dist exists (for unified full-stack deployments)
 const clientDist = path.join(__dirname, '../client/dist');

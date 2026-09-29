@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Venue Standee Poster - SOLIDWORKS Innovation Day 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', -apple-system, sans-serif;
+    }
+    body {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px;
+    }
+    .print-controls {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .btn {
+      padding: 10px 22px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: #e11d48;
+      color: white;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.35);
+    }
+    .btn-secondary {
+      background: #ffffff;
+      color: #334155;
+      border: 1px solid #cbd5e1;
+    }
+    .standee-card {
+      width: 100%;
+      max-width: 680px;
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 48px;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      border: 1px solid #e2e8f0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .top-accent-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: linear-gradient(90deg, #2563eb, #ea580c, #e11d48);
+    }
+    .brand-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .brand-logo {
+      height: 44px;
+      object-contain: contain;
+    }
+    .badge-pill {
+      display: inline-block;
+      padding: 6px 18px;
+      background: #fff1f2;
+      color: #e11d48;
+      border: 1px solid #ffe4e6;
+      border-radius: 100px;
+      font-weight: 800;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .title-main {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 34px;
+      color: #0b1329;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+    .title-sub {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+    .qr-wrapper {
+      display: inline-block;
+      padding: 22px;
+      background: #f8fafc;
+      border-radius: 24px;
+      border: 2px dashed #cbd5e1;
+      margin-bottom: 32px;
+    }
+    #qrcode {
+      background: white;
+      padding: 16px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .qr-scan-label {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #ea580c;
+    }
+    .steps-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+    .step-box {
+      background: #f8fafc;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+    }
+    .step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: #0f172a;
+      color: white;
+      font-weight: 800;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .step-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .step-desc {
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.4;
+    }
+    .standee-footer {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 20px;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .print-controls {
+        display: none;
+      }
+      .standee-card {
+        box-shadow: none;
+        border: none;
+        max-width: 100%;
+        padding: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="print-controls">
+    <button class="btn btn-primary" onclick="window.print()">🖨️ Print Standee Poster</button>
+    <button class="btn btn-secondary" onclick="window.close()">Close</button>
+  </div>
+
+  <div class="standee-card">
+    <div class="top-accent-bar"></div>
+
+    <div class="brand-header">
+      <img src="/Logos/conceptia-konnect-logo.png" alt="Conceptia Konnect" class="brand-logo" onerror="this.src='/uploads/conceptia-konnect-logo.png'">
+      <img src="/Logos/solidworks-logo.png" alt="SOLIDWORKS" class="brand-logo" onerror="this.src='/uploads/solidworks-logo.png'">
+    </div>
+
+    <div class="badge-pill">2026 EDITION</div>
+    <h1 class="title-main">I’m Part of What’s Next</h1>
+    <p class="title-sub">SOLIDWORKS Innovation Day 2026 · Create your personalized post in under 1 minute</p>
+
+    <div class="qr-wrapper">
+      <div id="qrcode"></div>
+      <div class="qr-scan-label">📸 Point phone camera here to scan</div>
+    </div>
+
+    <div class="steps-container">
+      <div class="step-box">
+        <div class="step-num">1</div>
+        <div class="step-title">Scan Code</div>
+        <div class="step-desc">Open your camera app and tap the link that appears.</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">2</div>
+        <div class="step-title">Enter Details</div>
+        <div class="step-desc">Fill in your name, designation and upload your photo.</div>
+      </div>
+      <div class="step-box">
+        <div class="step-num">3</div>
+        <div class="step-title">Share Post</div>
+        <div class="step-desc">Download your 1080×1080 creative & copy your LinkedIn caption.</div>
+      </div>
+    </div>
+
+    <div class="standee-footer">
+      <span>Hosted by Conceptia Konnect</span>
+      <span style="color: #0f172a; font-weight: 800;">#InnovationDay2026</span>
+    </div>
+  </div>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetUrl = urlParams.get('url') || window.location.origin;
+
+    new QRCode(document.getElementById('qrcode'), {
+      text: targetUrl,
+      width: 200,
+      height: 200,
+      colorDark: '#0f172a',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  </script>
+</body>
+</html>

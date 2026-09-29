@@ -12,6 +12,7 @@ if (!fs.existsSync(DATA_DIR)) {
 
 const REGISTRATIONS_FILE = path.join(DATA_DIR, 'registrations.json');
 const EVENT_FILE = path.join(DATA_DIR, 'event.json');
+const POSTS_FILE = path.join(DATA_DIR, 'social_posts.json');
 
 export const defaultEventData = {
   hero: {
@@ -273,5 +274,21 @@ export const localStore = {
     list = list.filter(r => r._id !== id && r.id !== id && r.qrCodeToken !== id);
     writeJSON(REGISTRATIONS_FILE, list);
     return list.length < initialLen;
+  },
+  getAttendeePosts() {
+    const list = readJSON(POSTS_FILE, []);
+    return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  },
+  addAttendeePost(record) {
+    const list = readJSON(POSTS_FILE, []);
+    const id = 'post_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+    const newRecord = {
+      _id: id,
+      ...record,
+      createdAt: new Date().toISOString()
+    };
+    list.unshift(newRecord);
+    writeJSON(POSTS_FILE, list);
+    return newRecord;
   }
 };

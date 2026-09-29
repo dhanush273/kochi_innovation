@@ -1,5 +1,6 @@
 import { isMongoActive } from '../db.js';
 import Registration from '../models/Registration.js';
+import AttendeePost from '../models/AttendeePost.js';
 import EventContent from '../models/EventContent.js';
 import { localStore, defaultEventData } from '../storage.js';
 
@@ -137,5 +138,29 @@ export const dataService = {
       }
     }
     return localStore.deleteRegistration(id);
+  },
+
+  async createAttendeePost(postData) {
+    if (isMongoActive()) {
+      try {
+        const record = await AttendeePost.create(postData);
+        return record.toObject();
+      } catch (err) {
+        console.error('MongoDB createAttendeePost error, falling back:', err.message);
+      }
+    }
+    return localStore.addAttendeePost(postData);
+  },
+
+  async getAllAttendeePosts() {
+    if (isMongoActive()) {
+      try {
+        const records = await AttendeePost.find().sort({ createdAt: -1 }).lean();
+        return records;
+      } catch (err) {
+        console.error('MongoDB getAllAttendeePosts error, falling back:', err.message);
+      }
+    }
+    return localStore.getAttendeePosts();
   }
 };

@@ -7,9 +7,16 @@
     <title>SOLIDWORKS Innovation Day 2026 | Social Post Generator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="/fonts/3ds-bold.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/3ds-semibold.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/3ds-regular.otf" as="font" type="font/otf" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
   </head>
   <body class="bg-[#f8fafc] text-slate-800 antialiased selection:bg-rose-500 selection:text-white">
+    <!-- Font cache warmer to guarantee instant canvas availability -->
+    <div style="font-family: 'ThreeDS'; font-weight: 800; position: absolute; left: -9999px; opacity: 0; pointer-events: none;">3DS Font Warm</div>
+    <div style="font-family: 'ThreeDS'; font-weight: 600; position: absolute; left: -9999px; opacity: 0; pointer-events: none;">3DS Font Warm</div>
+    <div style="font-family: 'ThreeDS'; font-weight: 400; position: absolute; left: -9999px; opacity: 0; pointer-events: none;">3DS Font Warm</div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -29,11 +29,22 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       // 1. Ensure 3DS Fonts are loaded into the document and canvas context
       if (typeof FontFace !== 'undefined') {
         try {
-          const fBold = new FontFace('3DS', 'url("/3DS Fonts/3DS BOLD.OTF")', { weight: '800' });
-          const fSemi = new FontFace('3DS', 'url("/3DS Fonts/3DS SEMIBOLD.OTF")', { weight: '600' });
-          const fReg = new FontFace('3DS', 'url("/3DS Fonts/3DS REGULAR.OTF")', { weight: '400' });
-          const loaded = await Promise.all([fBold.load(), fSemi.load(), fReg.load()]);
-          loaded.forEach(font => document.fonts.add(font));
+          const loadF = async (name, url, weight) => {
+            const font = new FontFace(name, `url("${url}")`, { weight, style: 'normal' });
+            const res = await font.load();
+            document.fonts.add(res);
+            return res;
+          };
+          await Promise.all([
+            loadF('ThreeDS', '/fonts/3ds-bold.otf', '800'),
+            loadF('ThreeDS', '/fonts/3ds-bold.otf', '700'),
+            loadF('ThreeDS', '/fonts/3ds-semibold.otf', '600'),
+            loadF('ThreeDS', '/fonts/3ds-regular.otf', '400'),
+            loadF('3DS', '/fonts/3ds-bold.otf', '800'),
+            loadF('3DS', '/fonts/3ds-bold.otf', '700'),
+            loadF('3DS', '/fonts/3ds-semibold.otf', '600'),
+            loadF('3DS', '/fonts/3ds-regular.otf', '400')
+          ]);
           await document.fonts.ready;
         } catch (e) {
           console.warn('3DS Font Face loading notice:', e);
@@ -180,7 +191,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
         ctx.drawImage(ckLogo, sx, sy, sw, sh, 65, 46, Math.min(targetW, 460), targetH);
       } else {
         ctx.fillStyle = '#0f172a';
-        ctx.font = '800 32px "3DS", sans-serif';
+        ctx.font = '800 32px ThreeDS, "3DS", sans-serif';
         ctx.fillText('Conceptia KONNECT', 65, 88);
       }
 
@@ -198,7 +209,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
         ctx.drawImage(swLogo, sx, sy, sw, sh, swImgX, 48, targetW, targetH);
       } else {
         ctx.fillStyle = '#ffffff';
-        ctx.font = '800 32px "3DS", sans-serif';
+        ctx.font = '800 32px ThreeDS, "3DS", sans-serif';
         ctx.textAlign = 'right';
         ctx.fillText('3DS SOLIDWORKS', 1015, 88);
         ctx.textAlign = 'left';
@@ -211,12 +222,12 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
 
       // "— I'M AT" text in 3DS font
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 30px "3DS", sans-serif';
+      ctx.font = '800 30px ThreeDS, "3DS", sans-serif';
       ctx.fillText("I'M AT", 122, 180);
 
       // Headline Line 1: SOLIDWORKS
       ctx.fillStyle = '#0a192f';
-      ctx.font = '800 78px "3DS", sans-serif';
+      ctx.font = '800 78px ThreeDS, "3DS", sans-serif';
       ctx.fillText('SOLIDWORKS', 65, 266);
 
       // Headline Line 2: INNOVATION DAY (with vibrant red-orange gradient)
@@ -224,21 +235,21 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       textGrad.addColorStop(0, '#e11d48');
       textGrad.addColorStop(1, '#ea580c');
       ctx.fillStyle = textGrad;
-      ctx.font = '800 78px "3DS", sans-serif';
+      ctx.font = '800 78px ThreeDS, "3DS", sans-serif';
       ctx.fillText('INNOVATION DAY', 65, 346);
 
       // Headline Line 3: "2026" in Electric Blue + "Hosted by Conceptia Konnect"
       ctx.fillStyle = '#2563eb';
-      ctx.font = '800 84px "3DS", sans-serif';
+      ctx.font = '800 84px ThreeDS, "3DS", sans-serif';
       ctx.fillText('2026', 65, 432);
 
       // "Hosted by" & "Conceptia Konnect" beside 2026
       ctx.fillStyle = '#64748b';
-      ctx.font = '600 22px "3DS", sans-serif';
+      ctx.font = '600 22px ThreeDS, "3DS", sans-serif';
       ctx.fillText('Hosted by', 295, 400);
 
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 30px "3DS", sans-serif';
+      ctx.font = '800 30px ThreeDS, "3DS", sans-serif';
       ctx.fillText('Conceptia Konnect', 295, 432);
 
       // 5. ATTENDEE PHOTO & DETAILS SECTION
@@ -326,7 +337,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       } else if (fullName.length > 15) {
         nameFontSize = 40;
       }
-      ctx.font = `800 ${nameFontSize}px "3DS", sans-serif`;
+      ctx.font = `800 ${nameFontSize}px ThreeDS, "3DS", sans-serif`;
       ctx.fillText(fullName, detailX, 565);
 
       // Designation
@@ -335,7 +346,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       if (designation.length > 28) {
         desigFontSize = 21;
       }
-      ctx.font = `600 ${desigFontSize}px "3DS", sans-serif`;
+      ctx.font = `600 ${desigFontSize}px ThreeDS, "3DS", sans-serif`;
       ctx.fillText(designation, detailX, 612);
 
       // Company
@@ -344,18 +355,18 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       if (companyName.length > 25) {
         compFontSize = 22;
       }
-      ctx.font = `800 ${compFontSize}px "3DS", sans-serif`;
+      ctx.font = `800 ${compFontSize}px ThreeDS, "3DS", sans-serif`;
       ctx.fillText(companyName, detailX, 655);
 
       // Sub-Block: A DAY OF INNOVATION • INSIGHTS • CONNECTIONS
       const blockY = 720;
       ctx.fillStyle = '#64748b';
-      ctx.font = '800 13px "3DS", sans-serif';
+      ctx.font = '800 13px ThreeDS, "3DS", sans-serif';
       ctx.letterSpacing = '2px';
       ctx.fillText('A DAY OF', detailX, blockY);
 
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 21px "3DS", sans-serif';
+      ctx.font = '800 21px ThreeDS, "3DS", sans-serif';
       ctx.fillText('INNOVATION  •  INSIGHTS  •  CONNECTIONS', detailX, blockY + 28);
 
       // Underline below title
@@ -364,7 +375,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
 
       // Supporting tagline lines
       ctx.fillStyle = '#64748b';
-      ctx.font = '500 17px "3DS", sans-serif';
+      ctx.font = '500 17px ThreeDS, "3DS", sans-serif';
       ctx.fillText('Exploring new possibilities in design, engineering and', detailX, blockY + 66);
       ctx.fillText('product development.', detailX, blockY + 92);
 
@@ -379,12 +390,12 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
 
       // Left: Hosted by Conceptia Konnect
       ctx.fillStyle = '#475569';
-      ctx.font = '600 22px "3DS", sans-serif';
+      ctx.font = '600 22px ThreeDS, "3DS", sans-serif';
       ctx.fillText('Hosted by Conceptia Konnect', 68, 1038);
 
       // Right: #InnovationDay2026
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 24px "3DS", sans-serif';
+      ctx.font = '800 24px ThreeDS, "3DS", sans-serif';
       ctx.textAlign = 'right';
       ctx.fillText('#InnovationDay2026', 1012, 1038);
       ctx.textAlign = 'left'; // reset

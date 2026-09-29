@@ -74,6 +74,12 @@ export const defaultEventConfig = {
       photoUrl: "/people/vijay-karthik-dhanapal.png"
     },
     {
+      id: "sp-6",
+      name: "A D Kumar",
+      designation: "Territory Technical Manager, Dassault Systèmes",
+      photoUrl: "/people/a-d-kumar.png"
+    },
+    {
       id: "sp-2",
       name: "Ramesh Aravind",
       designation: "Customer Success Specialist",
@@ -97,12 +103,7 @@ export const defaultEventConfig = {
       designation: "Team Lead - Enterprise Products",
       photoUrl: "/people/satish-varadharaj.jpg"
     },
-    {
-      id: "sp-6",
-      name: "A D Kumar",
-      designation: "Territory Technical Manager, Dassault Systèmes",
-      photoUrl: "/people/a-d-kumar.png"
-    }
+    
   ],
   venue: {
     name: "Hablis Hotel Chennai",

@@ -10,7 +10,7 @@ export default function Header({ onOpenQrModal }) {
           <img
             src="/Logos/conceptia-konnect-logo.png"
             alt="Conceptia Konnect"
-            className="h-10 sm:h-12 object-contain"
+            className="h-11 sm:h-14 object-contain"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = '/uploads/conceptia-konnect-logo.png';
@@ -22,7 +22,7 @@ export default function Header({ onOpenQrModal }) {
           <img
             src="/Logos/solidworks-logo.png"
             alt="SOLIDWORKS"
-            className="h-8 sm:h-10 object-contain"
+            className="h-9 sm:h-12 object-contain"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = '/uploads/solidworks-logo.png';

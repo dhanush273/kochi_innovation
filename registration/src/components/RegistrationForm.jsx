@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Camera, Plus, Upload, Check, AlertCircle, Sparkles, User, RefreshCw } from 'lucide-react';
+import { Camera, Image as ImageIcon, Plus, Upload, Check, AlertCircle, Sparkles, User, RefreshCw } from 'lucide-react';
 
 export default function RegistrationForm({ onSubmit, isSubmitting }) {
   const [fullName, setFullName] = useState('');
@@ -9,7 +9,8 @@ export default function RegistrationForm({ onSubmit, isSubmitting }) {
   const [photoFile, setPhotoFile] = useState(null);
   const [error, setError] = useState('');
 
-  const fileInputRef = useRef(null);
+  const galleryInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
 
   const handlePhotoSelect = (e) => {
     const file = e.target.files?.[0];
@@ -142,12 +143,22 @@ export default function RegistrationForm({ onSubmit, isSubmitting }) {
 
         {/* Photo Upload */}
         <div>
-          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+          <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
             Your Photo <span className="text-rose-500">*</span>
           </label>
 
+          {/* Hidden Inputs */}
+          {/* Gallery / Photos Picker (NO capture attribute - opens mobile photo gallery/files) */}
           <input
-            ref={fileInputRef}
+            ref={galleryInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handlePhotoSelect}
+          />
+          {/* Dedicated Camera Trigger */}
+          <input
+            ref={cameraInputRef}
             type="file"
             accept="image/*"
             capture="user"
@@ -156,25 +167,49 @@ export default function RegistrationForm({ onSubmit, isSubmitting }) {
           />
 
           {!photoPreview ? (
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              className="border-2 border-dashed border-sky-200 hover:border-sky-300 bg-sky-50/30 hover:bg-sky-50/70 rounded-2xl p-4 sm:p-5 flex items-center gap-4 cursor-pointer transition group"
-            >
-              <div className="w-12 h-12 rounded-xl bg-slate-100 group-hover:bg-rose-50 group-hover:text-rose-600 text-slate-600 flex items-center justify-center transition flex-shrink-0">
-                <Plus className="w-6 h-6" />
+            <div className="space-y-2.5">
+              <div className="grid grid-cols-2 gap-3">
+                {/* Choose from Gallery Button */}
+                <button
+                  type="button"
+                  onClick={() => galleryInputRef.current?.click()}
+                  className="p-4 rounded-2xl border-2 border-dashed border-sky-200 hover:border-sky-400 bg-sky-50/50 hover:bg-sky-50 transition flex flex-col items-center justify-center text-center group cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white shadow-sm border border-sky-100 group-hover:scale-105 text-sky-600 flex items-center justify-center transition mb-2">
+                    <ImageIcon className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold text-slate-800 group-hover:text-sky-600 transition">
+                    Upload from Gallery
+                  </span>
+                  <span className="text-[10px] text-slate-400 mt-0.5 font-medium">
+                    Photos, Library & Files
+                  </span>
+                </button>
+
+                {/* Take Photo with Camera Button */}
+                <button
+                  type="button"
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="p-4 rounded-2xl border-2 border-dashed border-rose-200 hover:border-rose-400 bg-rose-50/50 hover:bg-rose-50 transition flex flex-col items-center justify-center text-center group cursor-pointer"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white shadow-sm border border-rose-100 group-hover:scale-105 text-rose-600 flex items-center justify-center transition mb-2">
+                    <Camera className="w-6 h-6" />
+                  </div>
+                  <span className="text-xs font-bold text-slate-800 group-hover:text-rose-600 transition">
+                    Take a Photo
+                  </span>
+                  <span className="text-[10px] text-slate-400 mt-0.5 font-medium">
+                    Use Phone Camera
+                  </span>
+                </button>
               </div>
-              <div>
-                <p className="text-sm font-semibold text-slate-800 group-hover:text-rose-600 transition">
-                  Take or upload a photo
-                </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Clear, front-facing works best
-                </p>
-              </div>
+              <p className="text-[11px] text-slate-400 text-center">
+                Front-facing portrait photo works best for your personalized creative
+              </p>
             </div>
           ) : (
             <div className="flex items-center gap-4 p-3 rounded-2xl border border-slate-200 bg-slate-50">
-              <div className="w-16 h-16 rounded-xl overflow-hidden border border-slate-200 flex-shrink-0 bg-white">
+              <div className="w-16 h-16 rounded-xl overflow-hidden border border-slate-200 flex-shrink-0 bg-white shadow-sm">
                 <img
                   src={photoPreview}
                   alt="Selected Attendee"
@@ -187,16 +222,25 @@ export default function RegistrationForm({ onSubmit, isSubmitting }) {
                   <span>Photo Ready</span>
                 </div>
                 <p className="text-xs text-slate-500 truncate mt-0.5">
-                  Tap below to choose a different photo
+                  Change or take a new photo below
                 </p>
               </div>
-              <button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="px-3 py-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 bg-white hover:bg-slate-100 rounded-lg border border-slate-200 transition"
-              >
-                Change
-              </button>
+              <div className="flex items-center gap-1.5 flex-shrink-0">
+                <button
+                  type="button"
+                  onClick={() => galleryInputRef.current?.click()}
+                  className="px-2.5 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-white hover:bg-slate-100 rounded-lg border border-slate-200 transition shadow-sm"
+                >
+                  Gallery
+                </button>
+                <button
+                  type="button"
+                  onClick={() => cameraInputRef.current?.click()}
+                  className="px-2.5 py-1.5 text-xs font-semibold text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-lg border border-rose-100 transition"
+                >
+                  Camera
+                </button>
+              </div>
             </div>
           )}
         </div>

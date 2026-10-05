@@ -62,7 +62,7 @@ Here for the live demonstrations, the breakthrough ideas, and the vibrant engine
     id: 5,
     title: 'Shaping What’s Next',
     generate: ({ fullName, designation, companyName }) => {
-      return `Proud to say: I'm Part of What's Next at SOLIDWORKS Innovation Day 2026!
+      return `I'm Part of What's Next at SOLIDWORKS Innovation Day 2026!
 
 Hosted by Conceptia Konnect, today is all about the transformative power of modern CAD, simulation, and collaborative design.
 Thrilled to be surrounded by forward-thinking engineers and industry leaders.

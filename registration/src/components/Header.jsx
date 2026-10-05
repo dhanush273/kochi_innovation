@@ -48,7 +48,10 @@ export default function Header({ onOpenQrModal }) {
           I’m Part of <span className="text-rose-600">What’s Next</span>
         </h1>
         <p className="text-sm sm:text-base text-slate-500 mt-1 font-medium">
-          SOLIDWORKS Innovation Day 2026 · Create your post in under a minute.
+          SOLIDWORKS Innovation Day 2026
+        </p>
+        <p className="text-sm sm:text-base text-slate-500 italic">
+          Create your post in under a minute.
         </p>
       </div>
     </header>

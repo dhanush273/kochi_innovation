@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Camera, Image as ImageIcon, Plus, Upload, Check, AlertCircle, Sparkles, User, RefreshCw } from 'lucide-react';
+import { Camera, Image as ImageIcon, Plus, Upload, Check, AlertCircle, Sparkles, User, RefreshCw, Bot } from 'lucide-react';
+import { getRandomAiProfile } from '../utils/aiDemoProfiles.js';
 
 export default function RegistrationForm({ onSubmit, isSubmitting }) {
   const [fullName, setFullName] = useState('');
@@ -37,10 +38,11 @@ export default function RegistrationForm({ onSubmit, isSubmitting }) {
   };
 
   const handleUseDemo = () => {
-    setFullName('Ramesh Aravind');
-    setDesignation('Design Engineer');
-    setCompanyName('Conceptia Konnect');
-    setPhotoPreview('/people/ramesh.jpg');
+    const ai = getRandomAiProfile();
+    setFullName(ai.fullName);
+    setDesignation(ai.designation);
+    setCompanyName(ai.companyName);
+    setPhotoPreview(ai.photoUrl);
     setPhotoFile(null);
     setError('');
   };
@@ -85,10 +87,11 @@ export default function RegistrationForm({ onSubmit, isSubmitting }) {
         <button
           type="button"
           onClick={handleUseDemo}
-          className="text-xs text-rose-600 hover:text-rose-700 font-medium inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-50 border border-rose-100 transition hover:bg-rose-100"
+          className="text-xs text-rose-600 hover:text-rose-700 font-medium inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-100 transition hover:bg-rose-100 shadow-sm"
+          title="Autofill with random AI attendee profile"
         >
-          <Sparkles className="w-3.5 h-3.5" />
-          Fill with Demo Attendee (Ramesh)
+          <Sparkles className="w-3.5 h-3.5 text-rose-500 animate-pulse" />
+          Fill with Demo (Random AI)
         </button>
       </div>
 

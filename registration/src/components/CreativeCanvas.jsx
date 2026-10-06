@@ -365,7 +365,7 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       ctx.fillText(companyName, detailX, 616);
 
       // Sub-Block: A DAY OF INNOVATION • INSIGHTS • CONNECTIONS
-      const blockY = 684;
+      const blockY = 745;
       ctx.fillStyle = '#64748b';
       ctx.font = '800 13px ThreeDS, "3DS", sans-serif';
       ctx.letterSpacing = '2.5px';
@@ -415,14 +415,15 @@ export default function CreativeCanvas({ attendee, onRenderComplete }) {
       ctx.fillStyle = '#2563eb';
       ctx.fillRect(curX, underlineY, wConnections, underlineHeight);
 
-      // Hosted by Conceptia Konnect (under A DAY OF INNOVATION · INSIGHTS · CONNECTIONS)
+      // Hosted by Conceptia Konnect (aligned with lower end of orange card at ~852px)
+      const hostedY = 852;
       ctx.fillStyle = '#64748b';
-      ctx.font = '600 18px ThreeDS, "3DS", sans-serif';
-      ctx.fillText('Hosted by ', detailX, blockY + 64);
+      ctx.font = '600 22px ThreeDS, "3DS", sans-serif';
+      ctx.fillText('Hosted by ', detailX, hostedY);
       const wHosted = ctx.measureText('Hosted by ').width;
       ctx.fillStyle = '#0f172a';
-      ctx.font = '800 19px ThreeDS, "3DS", sans-serif';
-      ctx.fillText('Conceptia Konnect', detailX + wHosted, blockY + 64);
+      ctx.font = '800 24px ThreeDS, "3DS", sans-serif';
+      ctx.fillText('Conceptia Konnect', detailX + wHosted, hostedY);
 
       // 7. BOTTOM FOOTER BAR
       // Divider line

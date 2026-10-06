@@ -4,7 +4,7 @@ import FadeIn from './FadeIn';
 
 export default function VenueSection({ venue }) {
   const {
-    name = " Hablis Hotel Chennai ",
+    name = " Holiday Inn Cochin, an IHG Hotel ",
     address = " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
     directionsUrl = "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
     imageUrl = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"

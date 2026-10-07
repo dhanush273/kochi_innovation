@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Linkedin, Instagram } from 'lucide-react';
 import Header from './components/Header.jsx';
 import RegistrationForm from './components/RegistrationForm.jsx';
 import ResultScreen from './components/ResultScreen.jsx';
@@ -78,10 +79,37 @@ export default function App() {
         {/* Dynamic Content: Form vs Result */}
         <main className="w-full">
           {step === 'form' ? (
-            <RegistrationForm
-              onSubmit={handleFormSubmit}
-              isSubmitting={isSubmitting}
-            />
+            <>
+              <RegistrationForm
+                onSubmit={handleFormSubmit}
+                isSubmitting={isSubmitting}
+              />
+              <footer className="max-w-xl mx-auto text-center pt-8 pb-6 text-xs text-slate-400 font-medium space-y-2">
+                <div className="flex items-center justify-center gap-3 text-slate-500">
+                  <span className="font-semibold text-[11px] uppercase tracking-wider text-slate-400">Follow Us:</span>
+                  <a
+                    href="https://www.linkedin.com/showcase/conceptiakonnect/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 hover:text-[#0a66c2] transition font-medium"
+                  >
+                    <Linkedin className="w-3.5 h-3.5 fill-current" />
+                    <span>LinkedIn</span>
+                  </a>
+                  <span className="text-slate-300">·</span>
+                  <a
+                    href="https://www.instagram.com/conceptiakonnect/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 hover:text-[#e1306c] transition font-medium"
+                  >
+                    <Instagram className="w-3.5 h-3.5" />
+                    <span>Instagram</span>
+                  </a>
+                </div>
+                <p>Hosted by Conceptia Konnect · #InnovationDay2026</p>
+              </footer>
+            </>
           ) : (
             <ResultScreen
               attendee={attendee}

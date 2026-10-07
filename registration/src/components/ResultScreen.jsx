@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Download, Copy, Check, Share2, Sparkles, RefreshCw, Linkedin, ArrowLeft } from 'lucide-react';
+import { Download, Copy, Check, Share2, Sparkles, RefreshCw, Linkedin, Instagram, ArrowLeft } from 'lucide-react';
 import CreativeCanvas from './CreativeCanvas.jsx';
 import confetti from 'canvas-confetti';
 import { getRandomCaption, getCaptionByIndex, CAPTION_TEMPLATES } from '../utils/captionGenerator.js';
@@ -41,11 +41,19 @@ export default function ResultScreen({ attendee, onReset }) {
     });
   };
 
-  const handleShareToLinkedIn = () => {
-    // Open LinkedIn feed share in new tab
-    const textToShare = encodeURIComponent(captionObj.text);
-    const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.origin)}`;
-    window.open(linkedinUrl, '_blank');
+  const handleShareToLinkedIn = async () => {
+    // Auto-copy the caption so the user can easily paste it along with the downloaded creative
+    try {
+      await navigator.clipboard.writeText(captionObj.text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch (err) {
+      console.warn('Copy failed:', err);
+    }
+
+    // Open LinkedIn post composer in new tab
+    const linkedinUrl = 'https://www.linkedin.com/feed/?shareActive=true';
+    window.open(linkedinUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -98,6 +106,16 @@ export default function ResultScreen({ attendee, onReset }) {
           <span>Download Image</span>
         </button>
 
+        {/* Share to LinkedIn Button */}
+        <button
+          type="button"
+          onClick={handleShareToLinkedIn}
+          className="w-full py-3.5 px-6 rounded-2xl bg-[#0a66c2] hover:bg-[#084e96] active:scale-[0.99] text-white font-bold text-base shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2"
+        >
+          <Linkedin className="w-5 h-5 fill-current" />
+          <span>Share to LinkedIn</span>
+        </button>
+
         {/* Copy Caption Button */}
         <button
           type="button"
@@ -116,21 +134,55 @@ export default function ResultScreen({ attendee, onReset }) {
             </>
           )}
         </button>
+      </div>
 
-        {/* Create Another Post Link */}
-        <div className="pt-2 text-center">
-          <button
-            type="button"
-            onClick={onReset}
-            className="text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition hover:underline"
+      {/* Follow Us on Social Media */}
+      <div className="bg-white rounded-3xl p-5 sm:p-6 shadow-sm border border-slate-100 text-center space-y-3">
+        <div className="flex items-center justify-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider">
+          <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+          <span>Follow Us for Event Updates & Insights</span>
+        </div>
+        <p className="text-xs text-slate-500 max-w-sm mx-auto">
+          Connect with Conceptia Konnect on LinkedIn & Instagram for live event moments, highlights, and tech updates:
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          {/* Follow on LinkedIn */}
+          <a
+            href="https://www.linkedin.com/showcase/conceptiakonnect/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#0a66c2]/10 hover:bg-[#0a66c2]/20 text-[#0a66c2] text-xs sm:text-sm font-bold border border-[#0a66c2]/20 transition active:scale-95"
           >
-            Create Another Post
-          </button>
+            <Linkedin className="w-4 h-4 fill-current" />
+            <span>Follow on LinkedIn</span>
+          </a>
+
+          {/* Follow on Instagram */}
+          <a
+            href="https://www.instagram.com/conceptiakonnect/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 hover:from-purple-500/20 hover:via-pink-500/20 hover:to-orange-500/20 text-[#e1306c] text-xs sm:text-sm font-bold border border-pink-200 transition active:scale-95"
+          >
+            <Instagram className="w-4 h-4" />
+            <span>Follow on Instagram</span>
+          </a>
         </div>
       </div>
 
+      {/* Create Another Post Link */}
+      <div className="pt-2 text-center">
+        <button
+          type="button"
+          onClick={onReset}
+          className="text-xs sm:text-sm font-semibold text-slate-600 hover:text-slate-900 transition hover:underline"
+        >
+          Create Another Post
+        </button>
+      </div>
+
       {/* Footer */}
-      <footer className="text-center pt-4 pb-8 text-xs text-slate-400 font-medium">
+      <footer className="text-center pt-2 pb-8 text-xs text-slate-400 font-medium">
         Hosted by Conceptia Konnect · #InnovationDay2026
       </footer>
     </div>

@@ -148,7 +148,7 @@ export default function ResultScreen({ attendee, onReset }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
           {/* Follow on LinkedIn */}
           <a
-            href="https://www.linkedin.com/showcase/conceptiakonnect/"
+            href="https://www.linkedin.com/in/conceptiakonnectsolidworks/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-[#0a66c2]/10 hover:bg-[#0a66c2]/20 text-[#0a66c2] text-xs sm:text-sm font-bold border border-[#0a66c2]/20 transition active:scale-95"
@@ -159,7 +159,7 @@ export default function ResultScreen({ attendee, onReset }) {
 
           {/* Follow on Instagram */}
           <a
-            href="https://www.instagram.com/conceptiakonnect/"
+            href="https://www.instagram.com/conceptia_konnect/"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-2 py-3 px-4 rounded-2xl bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-orange-500/10 hover:from-purple-500/20 hover:via-pink-500/20 hover:to-orange-500/20 text-[#e1306c] text-xs sm:text-sm font-bold border border-pink-200 transition active:scale-95"

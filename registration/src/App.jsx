@@ -88,7 +88,7 @@ export default function App() {
                 <div className="flex items-center justify-center gap-3 text-slate-500">
                   <span className="font-semibold text-[11px] uppercase tracking-wider text-slate-400">Follow Us:</span>
                   <a
-                    href="https://www.linkedin.com/showcase/conceptiakonnect/"
+                    href="https://www.linkedin.com/in/conceptiakonnectsolidworks/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 hover:text-[#0a66c2] transition font-medium"
@@ -98,7 +98,7 @@ export default function App() {
                   </a>
                   <span className="text-slate-300">·</span>
                   <a
-                    href="https://www.instagram.com/conceptiakonnect/"
+                    href="https://www.instagram.com/conceptia_konnect/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 hover:text-[#e1306c] transition font-medium"

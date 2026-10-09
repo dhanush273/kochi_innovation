@@ -5,8 +5,8 @@ import FadeIn from './FadeIn';
 export default function VenueSection({ venue }) {
   const {
     name = " Holiday Inn Cochin, an IHG Hotel ",
-    address = " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
-    directionsUrl = "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
+    address = " A Junction, 33/1739, National Highway Bypass, Chakkaraparambu, Vennala, Kochi, Ernakulam, Keralam 682028",
+    directionsUrl = "https://maps.app.goo.gl/qM3s5tKe4sj4mSwo7",
     imageUrl = "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
   } = venue || {};
 
@@ -68,7 +68,7 @@ export default function VenueSection({ venue }) {
         {/* Location Badge */}
         <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-lg text-xs font-bold text-slate-800 shadow-md flex items-center gap-1.5">
           <span className="w-2 h-2 rounded-full bg-brand-red"></span>
-          Hablis - A Business Hotel
+          Holiday Inn Cochin, an IHG Hotel
         </div>
         </div>
       </FadeIn>

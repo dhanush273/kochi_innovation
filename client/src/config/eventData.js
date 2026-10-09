@@ -13,10 +13,10 @@ export const defaultEventConfig = {
     heroImage: "/assets/robotic-arm.png"
   },
   info: {
-    dates: "October 23, 2026",
+    dates: "November 12, 2026",
     time: "09:00 AM – 02:00 PM",
     venueName: "Holiday Inn Cochin, an IHG Hotel",
-    venueAddress: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
+    venueAddress: " A Junction, 33/1739, National Highway Bypass, Chakkaraparambu, Vennala, Kochi, Ernakulam, Keralam 682028",
     mode: "In-Person Event"
   },
   registrationForm: {
@@ -69,47 +69,22 @@ export const defaultEventConfig = {
    speakers: [
     {
       id: "sp-1",
-      name: "Vijay Karthik Dhanapal",
-      designation: "Partner Sales Manager, Dassault Systemes",
-      photoUrl: "/people/vijay-karthik-dhanapal.png"
+      name: "Shanoob Kiliyamannil",
+      designation: "Senior Solution Associate",
+      photoUrl: "/people/Shanoob-Kiliyamannil.jpg"
     },
     {
       id: "sp-2",
-      name: "A D Kumar",
-      designation: "Territory Technical Manager, Dassault Systèmes",
-      photoUrl: "/people/a-d-kumar.png"
-    },
-    {
-      id: "sp-3",
-      name: "Ramesh Aravind",
+      name: "Muhammed Shahin",
       designation: "Customer Success Specialist",
-      photoUrl: "/people/ramesh-aravind.jpg"
-    },
-    {
-      id: "sp-4",
-      name: "Mohamed Riswan M",
-      designation: "Solution Associate",
-      photoUrl: "/people/mohamed-riswan-m.png"
-    },
-    {
-      id: "sp-5",
-      name: "Mahendra H",
-      designation: "Product Manager, Simulation Solutions",
-      photoUrl: "/people/mahendra-h.jpg"
-    },
-    {
-      id: "sp-6",
-      name: "Satish Varadharaj",
-      designation: "Team Lead - Enterprise Products",
-      photoUrl: "/people/satish-varadharaj.jpg"
-    },
-    
+      photoUrl: "/people/Muhammed-Shahin.jpg"
+    }
   ],
   venue: {
     name: "Holiday Inn Cochin, an IHG Hotel",
-    address: " 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032",
-    directionsUrl: "https://maps.app.goo.gl/mUu2i567Ca8FwLG78",
-    imageUrl: "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkD101tjl_C92FsvKQf1xGDk3z-pEuVeaHyRDq3sSq8mj1Zcj3b0GNv8_ImN3gHut2Hu5h_0bUT0HaGaMjRcfY_poaG8blSWDtG1Teinh9c8Jdqm7NFD-8rSyNSt_U_-i4jAa4qSA=s1360-w1360-h1020-rw"
+    address: "A Junction, 33/1739, National Highway Bypass, Chakkaraparambu, Vennala, Kochi, Ernakulam, Keralam 682028",
+    directionsUrl: "https://maps.app.goo.gl/qM3s5tKe4sj4mSwo7",
+    imageUrl: "https://digital.ihg.com/is/image/ihg/holiday-inn-kochi-10515432803-4x3"
   },
   highlights: [
     {

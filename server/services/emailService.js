@@ -150,7 +150,7 @@ class EmailService {
                 <tr>
                   <td width="33%" align="center" style="padding:6px; border-right:1px solid rgba(255,255,255,0.15);">
                     <p style="margin:0; font-size:11px; text-transform:uppercase; color:#93c5fd; font-weight:700;">DATE</p>
-                    <p style="margin:4px 0 0 0; font-size:13px; font-weight:800; color:#ffffff;">October 23, 2026</p>
+                    <p style="margin:4px 0 0 0; font-size:13px; font-weight:800; color:#ffffff;">November 12, 2026</p>
                   </td>
                   <td width="33%" align="center" style="padding:6px; border-right:1px solid rgba(255,255,255,0.15);">
                     <p style="margin:0; font-size:11px; text-transform:uppercase; color:#93c5fd; font-weight:700;">TIME</p>
@@ -158,13 +158,13 @@ class EmailService {
                   </td>
                   <td width="33%" align="center" style="padding:6px;">
                     <p style="margin:0; font-size:11px; text-transform:uppercase; color:#93c5fd; font-weight:700;">VENUE</p>
-                    <p style="margin:4px 0 0 0; font-size:12px; font-weight:800; color:#ffffff; line-height:1.2;">Hablis Hotel, Guindy, Chennai</p>
+                    <p style="margin:4px 0 0 0; font-size:12px; font-weight:800; color:#ffffff; line-height:1.2;">Holiday Inn Cochin, an IHG Hotel</p>
                   </td>
                 </tr>
               </table>
 
               <div style="margin-top:14px; text-align:center;">
-                <a href="https://maps.app.goo.gl/mUu2i567Ca8FwLG78" target="_blank" style="color:#0284c7; font-size:12px; font-weight:700; text-decoration:none;">
+                <a href="https://www.google.com/maps/search/?api=1&query=Holiday+Inn+Cochin+an+IHG+Hotel" target="_blank" style="color:#0284c7; font-size:12px; font-weight:700; text-decoration:none;">
                   📍 View Location on Google Maps &rarr;
                 </a>
               </div>

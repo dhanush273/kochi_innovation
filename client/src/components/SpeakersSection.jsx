@@ -29,15 +29,20 @@ export default function SpeakersSection({ speakers }) {
 
       {/* Speaker Cards Grid */}
       {visibleSpeakers.length > 0 ? (
-        <div className="grid grid-cols-6 gap-2.5 sm:gap-3.5 pt-2">
+        <div className={`grid gap-3 sm:gap-3.5 pt-2 ${
+          visibleSpeakers.length === 1 ? 'grid-cols-1' :
+          visibleSpeakers.length === 2 ? 'grid-cols-2' :
+          visibleSpeakers.length === 3 ? 'grid-cols-3' :
+          visibleSpeakers.length === 4 ? 'grid-cols-2' :
+          'grid-cols-2 sm:grid-cols-3'
+        }`}>
           {visibleSpeakers.map((speaker, idx) => {
-            const isFourthOfFive = visibleSpeakers.length === 5 && idx === 3;
             return (
               <FadeIn
                 key={speaker.id || idx}
                 direction="up"
                 delay={idx * 60}
-                className={`col-span-2 ${isFourthOfFive ? 'col-start-2' : ''}`}
+                className="col-span-1"
               >
                 <div
                   className="group h-full flex flex-col bg-white rounded-2xl overflow-hidden border border-slate-100 hover:border-slate-300 shadow-sm hover:shadow-md transition-all duration-300"
@@ -45,11 +50,11 @@ export default function SpeakersSection({ speakers }) {
               {/* Speaker Image Container */}
               <div className="relative aspect-[4/4.2] overflow-hidden bg-slate-100">
                 <img
-                  src={getAssetUrl(speaker.photoUrl) || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400'}
+                  src={getAssetUrl(speaker.photoUrl)}
                   alt={speaker.name || 'Event speaker'}
                   loading="lazy"
                   className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => handleImageFallback(e, 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400')}
+                  onError={(e) => handleImageFallback(e)}
                 />
               </div>
 

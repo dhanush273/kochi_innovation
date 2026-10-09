@@ -1,4 +1,4 @@
-const BACKEND_URL = 'https://innovation-event.onrender.com';
+const BACKEND_URL = 'http://localhost:5000';
 
 /**
  * Resolves an asset URL properly whether hosted on Vercel, Netlify, or Render.
@@ -36,27 +36,34 @@ export function handleImageFallback(e, defaultFallback) {
     return;
   }
 
-  // Attempt 2: If /uploads/ failed, try /Logos/
-  if (attempts <= 1 && currentSrc.includes('/uploads/')) {
-    img.src = currentSrc.replace('/uploads/', '/Logos/');
+  // Attempt 2: Try space vs hyphen in filename
+  if (attempts <= 1 && currentSrc.includes('-')) {
+    img.src = currentSrc.replace(/-/g, ' ');
+    return;
+  }
+  if (attempts <= 1 && (currentSrc.includes('%20') || currentSrc.includes(' '))) {
+    img.src = currentSrc.replace(/(%20|\s)+/g, '-');
     return;
   }
 
-  // Attempt 3: If /Logos/ failed, try /uploads/
-  if (attempts <= 1 && currentSrc.includes('/Logos/')) {
-    img.src = currentSrc.replace('/Logos/', '/uploads/');
+  // Attempt 3: If /uploads/ failed, try /people/ or /Logos/
+  if (attempts <= 2 && currentSrc.includes('/uploads/')) {
+    img.src = currentSrc.replace('/uploads/', '/people/');
     return;
   }
 
   // Attempt 4: If relative path failed on frontend CDN/Vercel, try backend Render host
-  if (attempts <= 2 && currentSrc.startsWith('/')) {
+  if (attempts <= 3 && currentSrc.startsWith('/')) {
     img.src = `${BACKEND_URL}${currentSrc}`;
     return;
   }
 
-  // Final Attempt: Use default fallback or transparent pixel
+  // Final Attempt: Use default fallback or SVG avatar fallback
   img.onerror = null;
-  if (defaultFallback) {
+  const fallbackAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E";
+  if (defaultFallback && defaultFallback !== '#') {
     img.src = defaultFallback;
+  } else {
+    img.src = fallbackAvatar;
   }
 }

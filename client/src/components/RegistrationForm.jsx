@@ -168,7 +168,7 @@ export default function RegistrationForm({ registrationForm, onRegistrationSucce
               name="city"
               value={formData.city}
               onChange={handleChange}
-              placeholder="e.g. Chennai"
+              placeholder="e.g. Cochin"
               required
               className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-brand-red focus:ring-2 focus:ring-red-100 text-sm outline-none transition-all placeholder:text-slate-400 font-medium"
             />

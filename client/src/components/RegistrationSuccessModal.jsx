@@ -12,7 +12,7 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
       'BEGIN:VEVENT',
       `SUMMARY:SOLIDWORKS Innovation Day 2026`,
       `DESCRIPTION:Join Conceptia KONNECT and Dassault Systèmes for SOLIDWORKS Innovation Day 2026. Smarter Design. Faster Innovation.`,
-      `LOCATION:${eventInfo?.venueName || 'Holiday Inn Cochin, an IHG Hotel'}, ${eventInfo?.venueAddress || ' 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032'}`,
+      `LOCATION:${eventInfo?.venueName || 'Holiday Inn Cochin, an IHG Hotel'}, ${eventInfo?.venueAddress || ' A Junction, 33/1739, National Highway Bypass, Chakkaraparambu, Vennala, Kochi, Ernakulam, Keralam 682028'}`,
       'DTSTART:20261023T033000Z',
       'DTEND:20261023T083000Z',
       'STATUS:CONFIRMED',
@@ -77,11 +77,11 @@ export default function RegistrationSuccessModal({ registration, eventInfo, onCl
           )}
           <div className="flex items-start gap-2 pt-1 text-slate-600">
             <Calendar className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
-            <span>{eventInfo?.dates || 'October 23, 2026'} | {eventInfo?.time || '09:00 AM – 02:00 PM'}</span>
+            <span>{eventInfo?.dates || 'November 12, 2026'} | {eventInfo?.time || '09:00 AM – 02:00 PM'}</span>
           </div>
           <div className="flex items-start gap-2 text-slate-600">
             <MapPin className="w-4 h-4 text-brand-red flex-shrink-0 mt-0.5" />
-            <span>{eventInfo?.venueName || 'Holiday Inn Cochin, an IHG Hotel'}, {eventInfo?.venueAddress || ' 19, Grand Southern Trunk (GST) Road, Guindy, Chennai, Tamil Nadu 600032'}</span>
+            <span>{eventInfo?.venueName || 'Holiday Inn Cochin, an IHG Hotel'}, {eventInfo?.venueAddress || ' A Junction, 33/1739, National Highway Bypass, Chakkaraparambu, Vennala, Kochi, Ernakulam, Keralam 682028'}</span>
           </div>
         </div>
 

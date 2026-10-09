@@ -69,7 +69,7 @@ export default function AgendaSection({ agenda }) {
                 </h4>
               </div>
 
-              <ChevronRight className="w-4 h-4 text-slate-300 self-center group-hover:text-brand-red group-hover:translate-x-0.5 transition-all" />
+              
             </div>
           </FadeIn>
         ))}

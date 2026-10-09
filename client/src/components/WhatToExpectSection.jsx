@@ -65,7 +65,7 @@ function ExpectationItem({ item, index = 0 }) {
               onError={(e) => {
                 if (!e.currentTarget.dataset.triedBackend) {
                   e.currentTarget.dataset.triedBackend = 'true';
-                  e.currentTarget.src = `https://innovation-event.onrender.com${item.icon}`;
+                  e.currentTarget.src = `https://kochi-innovation.onrender.com${item.icon}`;
                 } else {
                   setImgError(true);
                 }

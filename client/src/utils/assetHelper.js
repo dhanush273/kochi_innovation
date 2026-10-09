@@ -1,4 +1,4 @@
-const BACKEND_URL = 'http://localhost:5000';
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'https://kochi-innovation.onrender.com';
 
 /**
  * Resolves an asset URL properly whether hosted on Vercel, Netlify, or Render.

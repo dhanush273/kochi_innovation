@@ -4,8 +4,9 @@ import FadeIn from './FadeIn';
 
 export default function InfoBar({ info }) {
   const {
-    dates = "October 23, 2026",
+    dates = "November 12, 2026",
     time = "09:00 AM – 02:00 PM",
+    venueName = "Holiday Inn Cochin, an IHG Hotel",
     venueAddress = "A Junction, 33/1739, National Highway Bypass, Chakkaraparambu, Vennala, Kochi, Ernakulam, Keralam 682028",
     mode = "In-Person Event"
   } = info || {};

@@ -5,9 +5,17 @@ const BASE_URL = CLEAN_URL.endsWith('/api') ? CLEAN_URL : `${CLEAN_URL}/api`;
 export const api = {
   // Event Content
   async getEventContent() {
-    const res = await fetch(`${BASE_URL}/event`);
-    if (!res.ok) throw new Error('Failed to fetch event content');
-    return res.json();
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const res = await fetch(`${BASE_URL}/event`, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('Failed to fetch event content');
+      return res.json();
+    } catch (err) {
+      console.warn('Event content fetch failed or timed out, using default config:', err.message);
+      return { success: false };
+    }
   },
 
   async updateEventContent(content) {

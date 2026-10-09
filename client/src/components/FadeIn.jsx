@@ -30,17 +30,20 @@ export default function FadeIn({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // If IntersectionObserver is not supported, reveal immediately
+    // Safety fallback: ensure content becomes visible even if observer misses it
+    const safetyTimer = setTimeout(() => {
+      setIsVisible(true);
+    }, Math.max(delay + 150, 350));
+
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) {
       setIsVisible(true);
-      return;
+      return () => clearTimeout(safetyTimer);
     }
 
-    // Check prefers-reduced-motion
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (mediaQuery.matches) {
+    if (mediaQuery && mediaQuery.matches) {
       setIsVisible(true);
-      return;
+      return () => clearTimeout(safetyTimer);
     }
 
     const observer = new IntersectionObserver(
@@ -55,8 +58,8 @@ export default function FadeIn({
         }
       },
       {
-        threshold,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.01,
+        rootMargin: '100px 0px 100px 0px',
       }
     );
 
@@ -66,11 +69,12 @@ export default function FadeIn({
     }
 
     return () => {
+      clearTimeout(safetyTimer);
       if (currentEl) {
         observer.unobserve(currentEl);
       }
     };
-  }, [once, threshold]);
+  }, [delay, once, threshold]);
 
   const getTransform = () => {
     if (isVisible) return 'translate3d(0, 0, 0)';

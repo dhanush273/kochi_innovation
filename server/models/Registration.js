@@ -57,6 +57,15 @@ const RegistrationSchema = new mongoose.Schema(
     notes: {
       type: String,
       default: ''
+    },
+    deletedBy: {
+      type: String,
+      default: null,
+      trim: true
+    },
+    deletedAt: {
+      type: Date,
+      default: null
     }
   },
   {
@@ -64,4 +73,7 @@ const RegistrationSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.models.Registration || mongoose.model('Registration', RegistrationSchema);
+export const Registration = mongoose.models.Registration || mongoose.model('Registration', RegistrationSchema);
+export { default as DeletedRegistration, DeletedRegistrationSchema } from './DeletedRegistration.js';
+export default Registration;
+

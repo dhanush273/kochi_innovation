@@ -11,8 +11,10 @@ if (!fs.existsSync(DATA_DIR)) {
 }
 
 const REGISTRATIONS_FILE = path.join(DATA_DIR, 'registrations.json');
+const DELETED_REGISTRATIONS_FILE = path.join(DATA_DIR, 'deleted_registrations.json');
 const EVENT_FILE = path.join(DATA_DIR, 'event.json');
 const POSTS_FILE = path.join(DATA_DIR, 'social_posts.json');
+
 
 export const defaultEventData = {
   hero: {
@@ -197,6 +199,7 @@ function readJSON(file, fallback) {
   try {
     if (fs.existsSync(file)) {
       const raw = fs.readFileSync(file, 'utf-8');
+      if (!raw || !raw.trim()) return fallback;
       return JSON.parse(raw);
     }
   } catch (err) {
@@ -270,12 +273,74 @@ export const localStore = {
     }
     return null;
   },
-  deleteRegistration(id) {
+  deleteRegistration(id, deletedBy = 'Admin', reason = '') {
     let list = readJSON(REGISTRATIONS_FILE, []);
-    const initialLen = list.length;
-    list = list.filter(r => r._id !== id && r.id !== id && r.qrCodeToken !== id);
+    const foundIndex = list.findIndex(r => r._id === id || r.id === id || r.qrCodeToken === id);
+    if (foundIndex === -1) return null;
+
+    const found = list[foundIndex];
+    list.splice(foundIndex, 1);
     writeJSON(REGISTRATIONS_FILE, list);
-    return list.length < initialLen;
+
+    const deletedList = readJSON(DELETED_REGISTRATIONS_FILE, []);
+    const deletedRecord = {
+      _id: 'del_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+      originalId: found._id || found.id || '',
+      fullName: found.fullName,
+      workEmail: found.workEmail,
+      phoneNumber: found.phoneNumber,
+      companyName: found.companyName,
+      city: found.city || '',
+      jobRole: found.jobRole,
+      status: found.status,
+      emailSent: found.emailSent || false,
+      emailSentAt: found.emailSentAt || null,
+      attendedAt: found.attendedAt || null,
+      qrCodeToken: found.qrCodeToken || '',
+      notes: found.notes || '',
+      originalCreatedAt: found.createdAt || null,
+      deletedBy: deletedBy || 'Admin',
+      deletedAt: new Date().toISOString(),
+      reason: reason || '',
+      createdAt: new Date().toISOString()
+    };
+    deletedList.unshift(deletedRecord);
+    writeJSON(DELETED_REGISTRATIONS_FILE, deletedList);
+
+    return deletedRecord;
+  },
+  getDeletedRegistrations() {
+    const list = readJSON(DELETED_REGISTRATIONS_FILE, []);
+    return list.sort((a, b) => new Date(b.deletedAt || b.createdAt) - new Date(a.deletedAt || a.createdAt));
+  },
+  restoreRegistration(id) {
+    let deletedList = readJSON(DELETED_REGISTRATIONS_FILE, []);
+    const foundIndex = deletedList.findIndex(r => r._id === id || r.originalId === id);
+    if (foundIndex === -1) return null;
+
+    const [deletedItem] = deletedList.splice(foundIndex, 1);
+    writeJSON(DELETED_REGISTRATIONS_FILE, deletedList);
+
+    const list = readJSON(REGISTRATIONS_FILE, []);
+    const restoredRecord = {
+      _id: deletedItem.originalId || ('reg_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7)),
+      fullName: deletedItem.fullName,
+      workEmail: deletedItem.workEmail,
+      phoneNumber: deletedItem.phoneNumber,
+      companyName: deletedItem.companyName,
+      city: deletedItem.city || '',
+      jobRole: deletedItem.jobRole,
+      status: deletedItem.status || 'Confirmed',
+      emailSent: deletedItem.emailSent || false,
+      emailSentAt: deletedItem.emailSentAt || null,
+      attendedAt: deletedItem.attendedAt || null,
+      qrCodeToken: deletedItem.qrCodeToken || deletedItem.originalId,
+      notes: deletedItem.notes || '',
+      createdAt: deletedItem.originalCreatedAt || new Date().toISOString()
+    };
+    list.unshift(restoredRecord);
+    writeJSON(REGISTRATIONS_FILE, list);
+    return restoredRecord;
   },
   getAttendeePosts() {
     const list = readJSON(POSTS_FILE, []);

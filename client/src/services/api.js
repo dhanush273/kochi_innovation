@@ -74,9 +74,30 @@ export const api = {
     return res.json();
   },
 
-  async deleteRegistration(id) {
-    const res = await fetch(`${BASE_URL}/registrations/${id}`, { method: 'DELETE' });
+  async deleteRegistration(id, { deletedBy = 'Admin', reason = '' } = {}) {
+    const res = await fetch(`${BASE_URL}/registrations/${id}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ deletedBy, reason })
+    });
     if (!res.ok) throw new Error('Failed to delete nomination');
+    return res.json();
+  },
+
+  async getDeletedRegistrations({ search = '' } = {}) {
+    const q = new URLSearchParams();
+    if (search) q.append('search', search);
+    const res = await fetch(`${BASE_URL}/registrations/deleted${q.toString() ? '?' + q : ''}`);
+    if (!res.ok) throw new Error('Failed to fetch deleted registrations');
+    return res.json();
+  },
+
+  async restoreRegistration(id) {
+    const res = await fetch(`${BASE_URL}/registrations/deleted/${id}/restore`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) throw new Error('Failed to restore registration');
     return res.json();
   },
 

@@ -160,15 +160,69 @@ router.patch('/:id/status', async (req, res) => {
   }
 });
 
-// DELETE /api/registrations/:id - Delete nomination
+// GET /api/registrations/deleted - List all archived/deleted registrations
+router.get('/deleted', async (req, res) => {
+  try {
+    const { search = '' } = req.query;
+    let deletedRecords = await dataService.getDeletedRegistrations();
+
+    if (search) {
+      const q = search.toLowerCase();
+      deletedRecords = deletedRecords.filter(
+        r =>
+          (r.fullName && r.fullName.toLowerCase().includes(q)) ||
+          (r.workEmail && r.workEmail.toLowerCase().includes(q)) ||
+          (r.companyName && r.companyName.toLowerCase().includes(q)) ||
+          (r.deletedBy && r.deletedBy.toLowerCase().includes(q)) ||
+          (r.phoneNumber && r.phoneNumber.includes(q))
+      );
+    }
+
+    res.json({
+      success: true,
+      count: deletedRecords.length,
+      data: deletedRecords
+    });
+  } catch (err) {
+    console.error('Error fetching deleted registrations:', err);
+    res.status(500).json({ success: false, message: 'Failed to retrieve deleted registrations' });
+  }
+});
+
+// POST /api/registrations/deleted/:id/restore - Restore an archived registration
+router.post('/deleted/:id/restore', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const restored = await dataService.restoreRegistration(id);
+    if (!restored) {
+      return res.status(404).json({ success: false, message: 'Deleted registration not found' });
+    }
+    res.json({
+      success: true,
+      message: 'Registration restored successfully',
+      data: restored
+    });
+  } catch (err) {
+    console.error('Restore error:', err);
+    res.status(500).json({ success: false, message: 'Failed to restore registration' });
+  }
+});
+
+// DELETE /api/registrations/:id - Delete nomination and archive to deleted registrations
 router.delete('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const success = await dataService.deleteRegistration(id);
-    if (!success) {
+    const deletedBy = req.body?.deletedBy || req.query?.deletedBy || 'Admin';
+    const reason = req.body?.reason || req.query?.reason || '';
+    const result = await dataService.deleteRegistration(id, deletedBy, reason);
+    if (!result) {
       return res.status(404).json({ success: false, message: 'Registration not found' });
     }
-    res.json({ success: true, message: 'Registration deleted successfully' });
+    res.json({
+      success: true,
+      message: 'Registration deleted and archived successfully',
+      data: result
+    });
   } catch (err) {
     console.error('Delete error:', err);
     res.status(500).json({ success: false, message: 'Failed to delete registration' });

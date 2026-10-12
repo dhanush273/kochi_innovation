@@ -6,6 +6,7 @@ import NominationsTable from './components/NominationsTable';
 import AttendeeModal    from './components/AttendeeModal';
 import BulkEmailModal   from './components/BulkEmailModal';
 import EmailPreviewModal from './components/EmailPreviewModal';
+import DeletedRegistrationsModal from './components/DeletedRegistrationsModal';
 import { api } from './services/api';
 
 export default function App() {
@@ -17,9 +18,11 @@ export default function App() {
   const [roleFilter,       setRoleFilter]       = useState('All');
   
   // Modals state
-  const [selectedAttendee, setSelectedAttendee] = useState(null);
-  const [previewAttendee,  setPreviewAttendee]  = useState(null);
-  const [isBulkEmailOpen,  setIsBulkEmailOpen]  = useState(false);
+  const [selectedAttendee,     setSelectedAttendee]     = useState(null);
+  const [previewAttendee,      setPreviewAttendee]      = useState(null);
+  const [isBulkEmailOpen,      setIsBulkEmailOpen]      = useState(false);
+  const [isDeletedArchiveOpen, setIsDeletedArchiveOpen] = useState(false);
+
 
   /* ── Load data ── */
   const loadData = async () => {
@@ -84,10 +87,14 @@ export default function App() {
   };
 
   /* ── Delete ── */
-  const handleDelete = async (id) => {
-    if (!window.confirm('Remove this nomination permanently?')) return;
+  const handleDelete = async (id, attendeeName = '') => {
+    const who = prompt(`Who is deleting the registration for "${attendeeName || 'this attendee'}"? (Deleted By)`, 'Admin');
+    if (who === null) return; // user cancelled prompt
+    const deletedBy = who.trim() || 'Admin';
+
+    if (!window.confirm(`Move "${attendeeName || 'this nomination'}" to Deleted Registrations? (Deleted by: ${deletedBy})`)) return;
     try {
-      await api.deleteRegistration(id);
+      await api.deleteRegistration(id, { deletedBy });
       setRegistrations(prev => prev.filter(r => r._id !== id && r.id !== id));
       const s = await api.getStats();
       setStats(s.stats);
@@ -101,6 +108,7 @@ export default function App() {
         loading={loading}
         onRefresh={loadData}
         onOpenBulkEmail={() => setIsBulkEmailOpen(true)}
+        onOpenDeleted={() => setIsDeletedArchiveOpen(true)}
       />
 
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-6">
@@ -154,6 +162,13 @@ export default function App() {
           }}
         />
       )}
+
+      {/* Deleted Registrations Archive Modal */}
+      <DeletedRegistrationsModal
+        isOpen={isDeletedArchiveOpen}
+        onClose={() => setIsDeletedArchiveOpen(false)}
+        onRestored={loadData}
+      />
 
     </div>
   );

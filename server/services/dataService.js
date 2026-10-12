@@ -1,8 +1,10 @@
 import { isMongoActive } from '../db.js';
 import Registration from '../models/Registration.js';
+import DeletedRegistration from '../models/DeletedRegistration.js';
 import AttendeePost from '../models/AttendeePost.js';
 import EventContent from '../models/EventContent.js';
 import { localStore, defaultEventData } from '../storage.js';
+
 
 export const dataService = {
   async getEventContent() {
@@ -123,21 +125,79 @@ export const dataService = {
     });
   },
 
-  async deleteRegistration(id) {
+  async deleteRegistration(id, deletedBy = 'Admin', reason = '') {
     if (isMongoActive()) {
       try {
-        let res = null;
+        let record = null;
         if (id.match(/^[0-9a-fA-F]{24}$/)) {
-          res = await Registration.findByIdAndDelete(id);
+          record = await Registration.findById(id);
         } else {
-          res = await Registration.findOneAndDelete({ qrCodeToken: id });
+          record = await Registration.findOne({ qrCodeToken: id });
         }
-        return !!res;
+
+        if (record) {
+          const regObj = record.toObject ? record.toObject() : record;
+          const { _id, createdAt, updatedAt, __v, ...rest } = regObj;
+          const deletedDoc = await DeletedRegistration.create({
+            ...rest,
+            originalId: String(_id),
+            originalCreatedAt: createdAt,
+            originalUpdatedAt: updatedAt,
+            deletedBy: deletedBy || 'Admin',
+            deletedAt: new Date(),
+            reason: reason || ''
+          });
+
+          await Registration.findByIdAndDelete(_id);
+          return deletedDoc.toObject ? deletedDoc.toObject() : deletedDoc;
+        }
+        return null;
       } catch (err) {
         console.error('MongoDB deleteRegistration error, falling back:', err.message);
       }
     }
-    return localStore.deleteRegistration(id);
+    return localStore.deleteRegistration(id, deletedBy, reason);
+  },
+
+  async getDeletedRegistrations() {
+    if (isMongoActive()) {
+      try {
+        const records = await DeletedRegistration.find().sort({ deletedAt: -1 }).lean();
+        return records;
+      } catch (err) {
+        console.error('MongoDB getDeletedRegistrations error, falling back:', err.message);
+      }
+    }
+    return localStore.getDeletedRegistrations();
+  },
+
+  async restoreRegistration(id) {
+    if (isMongoActive()) {
+      try {
+        let deletedDoc = null;
+        if (id.match(/^[0-9a-fA-F]{24}$/)) {
+          deletedDoc = await DeletedRegistration.findById(id);
+        }
+        if (!deletedDoc) {
+          deletedDoc = await DeletedRegistration.findOne({ originalId: id });
+        }
+        if (deletedDoc) {
+          const docObj = deletedDoc.toObject ? deletedDoc.toObject() : deletedDoc;
+          const { _id, deletedBy, deletedAt, reason, originalId, originalCreatedAt, originalUpdatedAt, __v, ...rest } = docObj;
+
+          const restored = await Registration.create({
+            ...rest,
+            createdAt: originalCreatedAt || new Date()
+          });
+          await DeletedRegistration.findByIdAndDelete(_id);
+          return restored.toObject ? restored.toObject() : restored;
+        }
+        return null;
+      } catch (err) {
+        console.error('MongoDB restoreRegistration error, falling back:', err.message);
+      }
+    }
+    return localStore.restoreRegistration(id);
   },
 
   async createAttendeePost(postData) {

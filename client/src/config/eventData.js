@@ -68,16 +68,47 @@ export const defaultEventConfig = {
   ],
    speakers: [
     {
-      id: "sp-1",
+      "id": "sp-1",
+      "name": "T Premkumar",
+      "designation": "Partner Sales Manager,Dassault Systèmes",
+      "photoUrl": "/people/T-Premkumar.jpg"
+    },
+    {
+      "id": "sp-2",
+      "name": "A D KUMAR",
+      "designation": "Customer Success Specialist",
+      "photoUrl": "/people/A-D-KUMAR.jpg" 
+    },
+    {
+      id: "sp-3",
       name: "Shanoob Kiliyamannil",
       designation: "Senior Solution Associate",
       photoUrl: "/people/Shanoob-Kiliyamannil.jpg"
     },
     {
-      id: "sp-2",
+      id: "sp-4",
       name: "Muhammed Shahin",
       designation: "Customer Success Specialist",
       photoUrl: "/people/Muhammed-Shahin.jpg"
+    },
+     {
+      "id": "sp-5",
+      "name": "Mahendran S",
+      "designation": "Product Manager, Simulation Solutions",
+      "photoUrl": "/people/Mahendran-S.jpg"
+    },
+    
+    {
+      "id": "sp-6",
+      "name": "Satish Varadharaj",
+      "designation": "Team Lead, Conceptia Konnect",
+      "photoUrl": "/people/Satish-Varadharaj.jpg" 
+    },
+     {
+      "id": "sp-7",
+      "name": "Ashok Kumar B",
+      "designation": "Country Technical Head, SolidCAM",
+      "photoUrl": "/people/Ashok-Kumar-B.jpg"
     }
   ],
   venue: {

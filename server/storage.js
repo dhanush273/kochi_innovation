@@ -128,7 +128,7 @@ export const defaultEventData = {
       "name": "Ashok Kumar B",
       "designation": "Country Technical Head, SolidCAM",
       "photoUrl": "/people/Ashok-Kumar-B.jpg"
-    },
+    }
    
 
       

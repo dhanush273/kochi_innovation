@@ -89,13 +89,13 @@ export const defaultEventData = {
     {
       "id": "sp-1",
       "name": "T Premkumar",
-      "designation": "Partner Sales Manager,Dassault Systèmes",
+      "designation": "Partner Sales Manager at Dassault Systèmes - Coimbatore & Kerala",
       "photoUrl": "/people/T-Premkumar.jpg"
     },
     {
       "id": "sp-2",
       "name": "A D KUMAR",
-      "designation": "Customer Success Specialist",
+      "designation": "Industry Process Consultant – INDIA-South(TN,KL)",
       "photoUrl": "/people/A-D-KUMAR.jpg" 
     },
     {
@@ -112,9 +112,9 @@ export const defaultEventData = {
     },
      {
       "id": "sp-5",
-      "name": "Mahendran S",
+      "name": "Mahendra H",
       "designation": "Product Manager, Simulation Solutions",
-      "photoUrl": "/people/Mahendran-S.jpg"
+      "photoUrl": "/people/Mahendran-H.jpg"
     },
     
     {

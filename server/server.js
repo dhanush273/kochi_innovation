@@ -10,6 +10,8 @@ import registrationRoutes from './routes/registrationRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import attendeePostRoutes from './routes/attendeePostRoutes.js';
 import { dataService } from './services/dataService.js';
+import { defaultEventData } from './storage.js';
+
 
 dotenv.config();
 
@@ -98,7 +100,12 @@ app.get('/api/health', (req, res) => {
 // Start Server
 async function startServer() {
   await connectDB();
-  //await seedInitialRegistrations();
+  try {
+    await dataService.updateEventContent(defaultEventData);
+    console.log('✅ Event content synchronized with default event data.');
+  } catch (err) {
+    console.warn('⚠️ Could not auto-sync event content:', err.message);
+  }
 
   app.listen(PORT, () => {
     console.log(`🚀 SOLIDWORKS Innovation Day API is running at http://localhost:${PORT}`);

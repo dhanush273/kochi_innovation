@@ -70,7 +70,7 @@ export const defaultEventConfig = {
     {
       "id": "sp-1",
       "name": "T Premkumar",
-      "designation": "Partner Sales Manager,Dassault Systèmes",
+      "designation": "Partner Sales Manager at Dassault Systèmes - Coimbatore & Kerala",
       "photoUrl": "/people/T-Premkumar.jpg"
     },
     {

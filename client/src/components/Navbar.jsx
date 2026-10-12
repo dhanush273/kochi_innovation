@@ -8,7 +8,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-20">
           
           {/* Left Brand: Conceptia KONNECT White Logo */}
-          <a href="#overview" className="flex items-center gap-3 transition-opacity hover:opacity-90">
+          <a href="https://ckonnect.in/solidworks/" className="flex items-center gap-3 transition-opacity hover:opacity-90">
             <img
               src="/Logos/conceptia-konnect-white-logo.png"
               alt="Conceptia KONNECT - Your Trusted Digital Solutions Partner"

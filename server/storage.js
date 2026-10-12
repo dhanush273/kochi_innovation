@@ -101,19 +101,19 @@ export const defaultEventData = {
     {
       id: "sp-3",
       name: "Shanoob Kiliyamannil",
-      designation: "Senior Solution Associate",
+      designation: "Senior Solution Associate,Conceptia KONNECT",
       photoUrl: "/people/Shanoob-Kiliyamannil.jpg"
     },
     {
       id: "sp-4",
       name: "Muhammed Shahin",
-      designation: "Customer Success Specialist",
+      designation: "Customer Success Specialist,Conceptia KONNECT",
       photoUrl: "/people/Muhammed-Shahin.jpg"
     },
      {
       "id": "sp-5",
       "name": "Mahendra H",
-      "designation": "Product Manager, Simulation Solutions",
+      "designation": "Product ManagerS-imulation Solutions,Conceptia KONNECT",
       "photoUrl": "/people/Mahendran-H.jpg"
     },
     

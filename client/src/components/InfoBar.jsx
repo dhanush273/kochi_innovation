@@ -49,9 +49,10 @@ export default function InfoBar({ info }) {
             <div>
               <div className="text-[10px] sm:text-[11px] font-bold text-red-100 uppercase tracking-wider">
                 Event Time
-              </div>
+              </div> 
               <div className="text-xs sm:text-sm font-extrabold text-white tracking-tight uppercase whitespace-nowrap">
-                {time}
+                {time} <div>( Followed By Lunch )</div>
+              
               </div>
             </div>
           </div>
